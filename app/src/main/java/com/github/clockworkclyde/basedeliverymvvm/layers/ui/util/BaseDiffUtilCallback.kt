@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.basedeliverymvvm.layers.ui.screens.util
+package com.github.clockworkclyde.basedeliverymvvm.layers.ui.util
 
 import androidx.recyclerview.widget.DiffUtil
 import com.github.clockworkclyde.basedeliverymvvm.layers.data.base.ListItem

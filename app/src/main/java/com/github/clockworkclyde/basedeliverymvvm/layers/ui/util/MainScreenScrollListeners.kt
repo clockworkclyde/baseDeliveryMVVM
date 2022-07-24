@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.basedeliverymvvm.layers.ui.screens.util
+package com.github.clockworkclyde.basedeliverymvvm.layers.ui.util
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager

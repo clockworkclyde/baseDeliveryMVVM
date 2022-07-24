@@ -1,17 +1,16 @@
 package com.github.clockworkclyde.basedeliverymvvm.layers.ui.screens.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentMainBinding
 import com.github.clockworkclyde.basedeliverymvvm.layers.data.base.ListItem
-import com.github.clockworkclyde.basedeliverymvvm.layers.ui.screens.util.MainScreenScrollListener
+import com.github.clockworkclyde.basedeliverymvvm.layers.ui.util.MainScreenScrollListener
 import com.github.clockworkclyde.basedeliverymvvm.layers.ui.vm.main.MainScreenViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,10 +39,9 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val anchors = arrayListOf(initialAnchorValue)
         var contentListSize = 0
-
+        setHasOptionsMenu(true)
 
         with(binding) {
             recyclerView.adapter = adapter
@@ -82,6 +80,23 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.main_menu, menu)
+
+        val searchButton = menu.findItem(R.id.searchButton)
+        val cartButton = menu.findItem(R.id.cartButton)
+
+        searchButton.setOnMenuItemClickListener {
+            navigateToSearchFragment()
+            true
+        }
+    }
+
+    private fun navigateToSearchFragment() {
+        findNavController().navigate(R.id.action_mainScreenFragment_to_searchFragment)
+    }
+
     private fun TabLayout.setNewAnchorTabs(anchors: List<String>) {
         removeAllTabs()
         if (anchors.contains("_")) {
@@ -90,6 +105,6 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
         anchors.onEach {
             addTab(this.newTab().setText(it))
         }
-        if (anchors.size > 3) tabMode = TabLayout.MODE_SCROLLABLE
+        if (anchors.size > 3) tabMode = TabLayout.MODE_SCROLLABLE // todo edit
     }
 }

@@ -1,9 +1,9 @@
 package com.github.clockworkclyde.basedeliverymvvm.layers.database.dao
 
 import androidx.room.*
-import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.CategoryWithItems
-import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.Category
-import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.CategoryItem
+import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.CachedCategoryWithItems
+import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.CachedCategory
+import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.CachedCategoryItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -11,24 +11,22 @@ interface MenuCategoriesDao {
 
     @Transaction
     @Query("SELECT * FROM categories")
-    fun dataCategoriesWithItems(): Flow<List<CategoryWithItems>>
-
-    //todo data flow for ui
-    @Query("SELECT * FROM categories")
-    fun dataCategories(): Flow<List<Category>>
-
-    //todo maybe source for search logic?
-    @Query("SELECT * FROM categoriesItems")
-    fun dataTotalCategoriesItems(): Flow<List<CategoryItem>>
-
-//    @Query("SELECT * FROM main_category_menu_items") where like %
-//    fun searchTotalCategoriesItems(query: String): Flow<List<CategoryItem>>
+    fun dataCategoriesWithItems(): List<CachedCategoryWithItems>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategories(categories: List<Category>)
+    suspend fun insertCategoriesComponents(
+        category: CachedCategory,
+        items: List<CachedCategoryItem>
+    )
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategoriesItems(items: List<CategoryItem>)
+    suspend fun insertCategoriesWithItems(categoriesWithItems: List<CachedCategoryWithItems>) {
+        for (entry in categoriesWithItems) {
+            insertCategoriesComponents(entry.category, entry.items)
+        }
+    }
+
+    @Query("SELECT * FROM categoriesItems WHERE title LIKE '%' || :query || '%' ORDER BY title ASC")
+    fun searchCategoriesItems(query: String): Flow<List<CachedCategoryItem>>
 
     @Query("DELETE FROM categories")
     suspend fun clearCategoriesList()

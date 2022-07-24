@@ -2,10 +2,20 @@ package com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import androidx.room.Index
 
-@Entity(tableName = "categoriesItems")
-data class CategoryItem(
+@Entity(
+    tableName = "categoriesItems",
+    foreignKeys = [ForeignKey(
+        entity = CachedCategory::class,
+        parentColumns = ["id_internal"],
+        childColumns = ["id_category_owner"],
+        onDelete = ForeignKey.CASCADE
+    )], indices = [Index("id_category_owner")]
+)
+data class CachedCategoryItem(
     @ColumnInfo(name = "id_external") @PrimaryKey(autoGenerate = false) val id: Long = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,

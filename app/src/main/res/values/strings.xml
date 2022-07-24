@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">BaseDeliveryMVVM</string>
-    <string name="cart">Cart</string>
+    <string name="cart">Корзина</string>
     <string name="home_screen">Home</string>
     <string name="cart_screen">Shopping cart</string>
     <string name="delete_all">Удалить все</string>
-    <string name="asian_food">asian</string>
+    <string name="kfc">kfc</string>
     <string name="pizza">pizza</string>
-    <string name="idk_restaurant">pei</string>
-    <string-array name="categories">Pizza, Sushi, Beer</string-array>
+    <string name="sushi">sushi</string>
+    <string name="hint_suggestion">Pepperoni</string>
+    <string name="search">Поиск</string>
 </resources>

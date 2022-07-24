@@ -1,6 +1,6 @@
 package com.github.clockworkclyde.basedeliverymvvm.layers.ui.screens.main
 
-import com.github.clockworkclyde.basedeliverymvvm.layers.ui.screens.util.BaseDiffUtilCallback
+import com.github.clockworkclyde.basedeliverymvvm.layers.ui.util.BaseDiffUtilCallback
 import com.github.clockworkclyde.basedeliverymvvm.layers.data.base.ListItem
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 

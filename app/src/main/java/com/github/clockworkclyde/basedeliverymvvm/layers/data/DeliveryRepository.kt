@@ -6,16 +6,19 @@ import com.github.clockworkclyde.basedeliverymvvm.layers.data.model.MenuCategory
 import com.github.clockworkclyde.basedeliverymvvm.layers.data.model.MenuItemProgressModel
 import com.github.clockworkclyde.basedeliverymvvm.layers.data.model.MenuItemUiModel
 import com.github.clockworkclyde.basedeliverymvvm.layers.database.DeliveryLocalDataSourceImpl
-import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.Category
+import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.CachedCategory
+import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.CachedCategoryItem
+import com.github.clockworkclyde.basedeliverymvvm.layers.database.entities.main.CachedCategoryWithItems
 import com.github.clockworkclyde.network.api.DeliveryRemoteDataSourceImpl
 import com.github.clockworkclyde.network.api.model.MenuItemDto
 import com.github.clockworkclyde.network.api.model.PagingState
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import java.net.UnknownHostException
 import javax.inject.Inject
-import kotlin.NullPointerException
 
 class DeliveryRepository @Inject constructor(
     private val remoteDataSource: DeliveryRemoteDataSourceImpl,
@@ -23,63 +26,119 @@ class DeliveryRepository @Inject constructor(
     private val context: Context
 ) {
 
-    private val dataState = MutableStateFlow<List<MenuCategoryUiModel>>(emptyList())
+    private val dataState =
+        MutableStateFlow<PagingState<List<MenuCategoryUiModel>>>(PagingState.Loading)
 
-    fun data(): Flow<List<MenuCategoryUiModel>> =
-        remoteDataSource.state.map { state ->
-            when (state) {
-                is PagingState.Loading -> {
-                    val progressObjects = IntRange(1, 10).map { MenuItemProgressModel }
-                    listOf(MenuCategoryUiModel("_", progressObjects))
-                }
-                is PagingState.Content -> state.data.map { (category, dtoList) ->
-                    val mappedList = mapDtoToUiModel(dtoList)
-                    MenuCategoryUiModel(
-                        category = category,
-                        items = mappedList
-                    )
-                }
-                is PagingState.Error -> throw UnknownHostException("Network mechanism error") //todo handler
-                else -> throw NullPointerException("wrong state exception for paging state $state")
+    fun data(): Flow<List<MenuCategoryUiModel>> = dataState.map { state ->
+        when (state) {
+            is PagingState.Loading -> {
+                val progressObjects = IntRange(1, 10).map { MenuItemProgressModel }
+                listOf(MenuCategoryUiModel("_", progressObjects))
             }
+            is PagingState.Content -> state.data
+            is PagingState.Error -> throw UnknownHostException("Network mechanism error") //todo handler
+            else -> throw NullPointerException("wrong state exception for paging state $state")
         }
-
-    suspend fun init() {
-        val categories = listOf(
-            context.getString(R.string.asian_food),
-            context.getString(R.string.pizza),
-            context.getString(
-                R.string.idk_restaurant
-            )
-        )
-        val task = remoteDataSource.initLoading(categories)
-        localDataSource.clearCategories()
-        val categoriesModel = categories.map {
-            Category(
-                title = it
-            )
-        }
-        localDataSource.insertLatestCategories(categoriesModel)
-
     }
 
+    // to do: move some logic to room cache class
     /** request available data from database **/
-    suspend fun refresh(isForced: Boolean = false) {
-        if (isForced || remoteDataSource.state.value is PagingState.Error || dataState.value.isEmpty()) init()
-        else {
-            localDataSource.dataCategoriesWithItemsStateFlow.map {
-
+    suspend fun init(isForcedRefresh: Boolean = false) {
+        coroutineScope {
+            if (isForcedRefresh || dataState.value is PagingState.Error) {
+                localDataSource.clearCategoriesAndItems()
+                val categories = listOf(
+                    context.getString(R.string.kfc),
+                    context.getString(R.string.pizza),
+                    context.getString(
+                        R.string.sushi
+                    )
+                )
+                val runningTasks = categories.map { category ->
+                    async {
+                        val items = remoteDataSource.initLoading(category)
+                        category to items
+                    }
+                }
+                val categoryModels = runningTasks.awaitAll().map {
+                    val cachedCategory = CachedCategory(it.first, it.first.hashCode().toLong())
+                    val cachedCategoryItems =
+                        mapDtoToEntity(it.second, it.first.hashCode().toLong())
+                    CachedCategoryWithItems(cachedCategory, cachedCategoryItems)
+                }
+                localDataSource.insertCategoriesWithItems(categoryModels)
             }
+            val mappedDbResponse =
+                withContext(Dispatchers.IO) {
+                    localDataSource.getLatestCategoriesData().map {
+                        MenuCategoryUiModel(it.category.title, mapEntityToUi(it.items))
+                    }
+                }
+            if (mappedDbResponse.isEmpty()) {
+                init(true)
+            }
+            dataState.emit(PagingState.Content(mappedDbResponse))
         }
     }
 
-    private fun mapDtoToUiModel(objects: List<MenuItemDto>): List<MenuItemUiModel> = objects.map {
+    fun search(query: String): Flow<List<MenuItemUiModel>> {
+        val items = localDataSource.searchInCategoriesData(query).map { dbItems ->
+            dbItems.map {
+                MenuItemUiModel(
+                    id = it.id,
+                    title = it.title,
+                    image = it.imageUrl,
+                    price = it.price,
+                    servingSize = it.servingSize
+                )
+            }
+        }
+        return items
+    }
+
+
+    private fun mapDtoToEntity(
+        items: List<MenuItemDto>,
+        categoryId: Long
+    ): List<CachedCategoryItem> =
+        items.map {
+            CachedCategoryItem(
+                id = it.id,
+                title = it.title,
+                imageUrl = it.image,
+                price = 399.99,
+                servingSize = it.servingSize ?: "",
+                categoryId = categoryId
+            )
+        }
+
+    private fun mapEntityToUi(items: List<CachedCategoryItem>): List<MenuItemUiModel> = items.map {
         MenuItemUiModel(
             id = it.id,
             title = it.title,
-            image = it.image,
-            servingSize = it.servingSize ?: "",
-            price = 499.99
+            image = it.imageUrl,
+            price = it.price,
+            servingSize = it.servingSize
         )
     }
 }
+
+
+//    fun data(): Flow<List<MenuCategoryUiModel>> =
+//        remoteDataSource.state.map { state ->
+//            when (state) {
+//                is PagingState.Loading -> {
+//                    val progressObjects = IntRange(1, 10).map { MenuItemProgressModel }
+//                    listOf(MenuCategoryUiModel("_", progressObjects))
+//                }
+//                is PagingState.Content -> state.data.map { (category, dtoList) ->
+//                    val mappedList = mapDtoToUiModel(dtoList)
+//                    MenuCategoryUiModel(
+//                        category = category,
+//                        items = mappedList
+//                    )
+//                }
+//                is PagingState.Error -> throw UnknownHostException("Network mechanism error") //todo handler
+//                else -> throw NullPointerException("wrong state exception for paging state $state")
+//            }
+//        }

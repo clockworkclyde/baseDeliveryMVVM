@@ -7,6 +7,11 @@
     <string name="kfc">kfc</string>
     <string name="pizza">pizza</string>
     <string name="sushi">sushi</string>
-    <string name="hint_suggestion">Pepperoni</string>
+    <string-array name="search_suggestion">
+        <item>Pizza</item>
+        <item>Sushi</item>
+        <item>Burger</item>
+        <item>Beer</item>
+    </string-array>
     <string name="search">Поиск</string>
 </resources>

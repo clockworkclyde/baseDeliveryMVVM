@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".layers.ui.screens.MainActivity">
+    tools:context=".ui.screens.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
@@ -19,10 +19,10 @@
         app:navGraph="@navigation/nav_graph" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:name="com.github.clockworkclyde.basedeliverymvvm.layers.ui.screens.details.DetailsFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.ui.screens.details.DetailsFragment"
         android:id="@+id/bottom_sheet_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior=".layers.ui.navigation.NoGestureBottomSheetBehaviour"/>
+        app:layout_behavior=".ui.navigation.NoGestureBottomSheetBehaviour"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

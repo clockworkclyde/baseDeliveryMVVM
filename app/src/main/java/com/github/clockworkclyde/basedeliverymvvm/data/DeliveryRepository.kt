@@ -2,9 +2,9 @@ package com.github.clockworkclyde.basedeliverymvvm.data
 
 import android.content.Context
 import com.github.clockworkclyde.basedeliverymvvm.R
-import com.github.clockworkclyde.basedeliverymvvm.data.model.MenuCategoryUiModel
-import com.github.clockworkclyde.basedeliverymvvm.data.model.MenuItemProgressModel
-import com.github.clockworkclyde.basedeliverymvvm.data.model.MenuItemUiModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryUiModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemProgressModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
 import com.github.clockworkclyde.basedeliverymvvm.database.DeliveryLocalDataSourceImpl
 import com.github.clockworkclyde.basedeliverymvvm.database.entities.main.CachedCategory
 import com.github.clockworkclyde.basedeliverymvvm.database.entities.main.CachedCategoryItem
@@ -119,23 +119,3 @@ class DeliveryRepository @Inject constructor(
         )
     }
 }
-
-
-//    fun data(): Flow<List<MenuCategoryUiModel>> =
-//        remoteDataSource.state.map { state ->
-//            when (state) {
-//                is PagingState.Loading -> {
-//                    val progressObjects = IntRange(1, 10).map { MenuItemProgressModel }
-//                    listOf(MenuCategoryUiModel("_", progressObjects))
-//                }
-//                is PagingState.Content -> state.data.map { (category, dtoList) ->
-//                    val mappedList = mapDtoToUiModel(dtoList)
-//                    MenuCategoryUiModel(
-//                        category = category,
-//                        items = mappedList
-//                    )
-//                }
-//                is PagingState.Error -> throw UnknownHostException("Network mechanism error") //todo handler
-//                else -> throw NullPointerException("wrong state exception for paging state $state")
-//            }
-//        }

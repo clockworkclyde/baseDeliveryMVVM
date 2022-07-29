@@ -17,6 +17,6 @@ interface OrderCartDao {
     suspend fun insertOrderCartItem(item: OrderCartItem)
 
     @Query("DELETE FROM order_cart_items WHERE external_id LIKE :itemId")
-    suspend fun deleteOrderCartItem(itemId: Int)
+    suspend fun deleteOrderCartItem(itemId: Long)
 
 }

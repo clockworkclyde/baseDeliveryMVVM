@@ -17,7 +17,7 @@
         android:theme="@style/Theme.BaseDeliveryMVVM"
         tools:targetApi="31">
         <activity
-            android:name="com.github.clockworkclyde.basedeliverymvvm.ui.screens.MainActivity"
+            android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

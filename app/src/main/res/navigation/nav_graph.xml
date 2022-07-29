@@ -5,24 +5,39 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainScreenFragment">
 
-
     <fragment
         android:id="@+id/mainScreenFragment"
-        android:name="com.github.clockworkclyde.basedeliverymvvm.ui.screens.main.MainScreenFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScreenFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainScreenFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.github.clockworkclyde.basedeliverymvvm.ui.screens.search.SearchFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <dialog
         android:id="@+id/detailsFragment"
-        android:name="com.github.clockworkclyde.basedeliverymvvm.ui.screens.details.DetailsFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.details.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="menuItem"
+            app:argType="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel" />
+    </dialog>
+    <fragment
+        android:id="@+id/orderCartFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.cart.OrderCartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
+
+    <action
+        android:id="@+id/action_to_detailsFragment"
+        app:destination="@id/detailsFragment" />
+    <action
+        android:id="@+id/action_to_orderCartFragment"
+        app:destination="@id/orderCartFragment" />
 </navigation>

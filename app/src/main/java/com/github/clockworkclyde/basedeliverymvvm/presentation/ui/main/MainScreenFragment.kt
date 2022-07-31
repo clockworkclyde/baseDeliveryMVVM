@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentMainBinding
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.MainActivity
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.MainScreenScrollListener

@@ -1,9 +1,11 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.util
 
+import android.view.View
 import android.widget.EditText
 import android.widget.SearchView
 import androidx.core.widget.doOnTextChanged
 
+const val DEFAULT_THROTTLE_DURATION_MS = 300L
 
 inline fun SearchView.doOnQueryTextChanged(crossinline listener: (String) -> Unit) {
     setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -23,5 +25,40 @@ inline fun SearchView.doOnQueryTextChanged(crossinline listener: (String) -> Uni
 inline fun EditText.doOnQueryTextChanged(crossinline listener: (String) -> Unit) {
     doOnTextChanged { text, _, _, _ ->
         listener(text?.toString().orEmpty())
+    }
+}
+
+
+inline fun <V : View> V.onSingleClick(
+    throttleDuration: Long = DEFAULT_THROTTLE_DURATION_MS,
+    crossinline listener: () -> Unit
+) {
+    setOnClickListener(SafeClickListener(throttleDuration) { listener.invoke() })
+}
+
+class SafeClickListener(
+    private val throttleDuration: Long,
+    private val clickListener: View.OnClickListener
+) : View.OnClickListener {
+    private val doubleClickPreventer = DoubleClickPrevent(throttleDuration)
+
+    override fun onClick(v: View?) {
+        if (doubleClickPreventer.isPrevent()) return
+        else clickListener.onClick(v)
+    }
+}
+
+private class DoubleClickPrevent(private val throttleDuration: Long) {
+    private var lastClickTiming = 0L
+
+    fun isPrevent(): Boolean {
+        val now = System.currentTimeMillis()
+        val spentTime = now - lastClickTiming
+        return if (spentTime in 1 until throttleDuration) {
+            true
+        } else {
+            lastClickTiming = now
+            false
+        }
     }
 }

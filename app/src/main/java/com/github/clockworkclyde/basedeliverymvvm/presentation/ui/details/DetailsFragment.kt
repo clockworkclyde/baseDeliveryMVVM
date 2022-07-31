@@ -47,7 +47,6 @@ class DetailsFragment : BaseDialogFragment() {
                 )
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
-            imageView.apply { scaleType = ImageView.ScaleType.CENTER_CROP }
 
             titleTextView.text = item.title
             button.text = item.price.toString()

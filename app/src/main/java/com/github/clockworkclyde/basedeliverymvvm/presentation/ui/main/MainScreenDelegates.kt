@@ -12,6 +12,7 @@ import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.men
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemCartBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuProgressBinding
+import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
 object MainScreenDelegates {
@@ -44,8 +45,8 @@ object MainScreenDelegates {
                     btnAddItemToOrderCart.text = "${item.price} p."
                     servingSizeTextView.text = item.servingSize
 
-                    root.setOnClickListener { onItemClickListener.invoke(item, 0) }
-                    btnAddItemToOrderCart.setOnClickListener { onItemClickListener.invoke(item, 1) }
+                    root.onSingleClick { onItemClickListener.invoke(item, 0) }
+                    btnAddItemToOrderCart.onSingleClick { onItemClickListener.invoke(item, 1) }
                 }
             }
 

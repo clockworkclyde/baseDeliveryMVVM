@@ -1,12 +1,13 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main
 
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.BaseDiffUtilCallback
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 class MainScreenAdapter(
-    onItemClickListener: (MenuItemUiModel, Int) -> Unit
+    onItemClickListener: (MenuItemUiModel, MainScreenDelegates.ClickAction) -> Unit
 ) : AsyncListDifferDelegationAdapter<ListItem>(BaseDiffUtilCallback()) {
 
     init {

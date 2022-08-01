@@ -2,6 +2,7 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -9,13 +10,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentMainBinding
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.MainActivity
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.MainScreenScrollListener
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.main.MainScreenViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -67,6 +69,18 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
                     }
             }
 
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                val navController = findNavController()
+                navController.currentBackStackEntryFlow.map { entry ->
+                    entry.savedStateHandle.get<MenuItemUiModel>("item")
+                }
+                    .collectLatest { item ->
+                        if (item != null) {
+                            onItemClick(item, MainScreenDelegates.ClickAction.AddToCart)
+                        }
+                    }
+            }
+
             val manager = recyclerView.layoutManager as GridLayoutManager
             val scrollListener =
                 MainScreenScrollListener(
@@ -90,27 +104,32 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
         val cartButton = menu.findItem(R.id.cartButton)
 
         cartButton.setOnMenuItemClickListener {
-            navigateToFragment(0)
+            navigateToFragment(Destination.OrderCart)
             true
         }
 
         searchButton.setOnMenuItemClickListener {
-            navigateToFragment(1)
+            navigateToFragment(Destination.Search)
             true
         }
     }
 
-    private fun onItemClick(item: MenuItemUiModel, dest: Int) {
+    private fun onItemClick(
+        item: MenuItemUiModel,
+        dest: MainScreenDelegates.ClickAction
+    ) {
         when (dest) {
-            0 -> findNavController().navigate(MainScreenFragmentDirections.actionToDetailsFragment(item))
-            1 -> viewModel.addToOrderCart(item)
+            MainScreenDelegates.ClickAction.OpenDetails -> findNavController().navigate(
+                MainScreenFragmentDirections.actionToDetailsFragment(item)
+            )
+            MainScreenDelegates.ClickAction.AddToCart -> viewModel.addToOrderCart(item)
         }
     }
 
-    private fun navigateToFragment(dest: Int) {
+    private fun navigateToFragment(dest: Destination) {
         when (dest) {
-            0 -> findNavController().navigate(R.id.action_to_orderCartFragment)
-            1 -> findNavController().navigate(R.id.action_mainScreenFragment_to_searchFragment)
+            Destination.OrderCart -> findNavController().navigate(R.id.action_to_orderCartFragment)
+            Destination.Search -> findNavController().navigate(R.id.action_mainScreenFragment_to_searchFragment)
         }
     }
 
@@ -124,4 +143,9 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
         }
         if (anchors.size > 3) tabMode = TabLayout.MODE_SCROLLABLE // todo edit
     }
+
+    private enum class Destination {
+        OrderCart, Search
+    }
+
 }

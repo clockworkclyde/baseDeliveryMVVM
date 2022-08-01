@@ -37,7 +37,7 @@ inline fun <V : View> V.onSingleClick(
 }
 
 class SafeClickListener(
-    private val throttleDuration: Long,
+    throttleDuration: Long,
     private val clickListener: View.OnClickListener
 ) : View.OnClickListener {
     private val doubleClickPreventer = DoubleClickPrevent(throttleDuration)

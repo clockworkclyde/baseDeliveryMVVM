@@ -37,7 +37,6 @@ class OrderCartFragment : Fragment(R.layout.fragment_cart) {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.data.collect {
                     adapter.items = it
-                    Log.e("order data flow", it.toString())
                 }
             }
         }

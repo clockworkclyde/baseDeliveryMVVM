@@ -1,22 +1,21 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentDetailsBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseDialogFragment
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getScreenSize
+import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
 
 class DetailsFragment : BaseDialogFragment() {
 
@@ -50,6 +49,13 @@ class DetailsFragment : BaseDialogFragment() {
 
             titleTextView.text = item.title
             button.text = item.price.toString()
+            button.onSingleClick { provideOrderCartClick(item) }
         }
+    }
+
+    private fun provideOrderCartClick(item: MenuItemUiModel) {
+        val navController = findNavController()
+        navController.previousBackStackEntry?.savedStateHandle?.set("item", item)
+        navController.popBackStack()
     }
 }

@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main
+package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base
 
 import android.app.Activity
 import com.bumptech.glide.Glide
@@ -17,8 +17,12 @@ import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
 object MainScreenDelegates {
 
+    enum class ClickAction {
+        OpenDetails, AddToCart
+    }
+
     fun mainScreenAdapterDelegate(
-        onItemClickListener: (MenuItemUiModel, Int) -> Unit
+        onItemClickListener: (MenuItemUiModel, ClickAction) -> Unit
     ) =
         adapterDelegateViewBinding<MenuItemUiModel, ListItem, ItemMenuBinding>(
             { inflater, container ->
@@ -45,8 +49,8 @@ object MainScreenDelegates {
                     btnAddItemToOrderCart.text = "${item.price} p."
                     servingSizeTextView.text = item.servingSize
 
-                    root.onSingleClick { onItemClickListener.invoke(item, 0) }
-                    btnAddItemToOrderCart.onSingleClick { onItemClickListener.invoke(item, 1) }
+                    root.onSingleClick { onItemClickListener.invoke(item, ClickAction.OpenDetails) }
+                    btnAddItemToOrderCart.onSingleClick { onItemClickListener.invoke(item, ClickAction.AddToCart) }
                 }
             }
 

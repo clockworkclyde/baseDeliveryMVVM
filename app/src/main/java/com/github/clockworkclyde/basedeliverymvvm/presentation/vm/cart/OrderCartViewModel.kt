@@ -25,4 +25,10 @@ class OrderCartViewModel @Inject constructor(
             }
         }
     }
+
+    fun deleteById(id: Long) {
+        viewModelScope.launch {
+            orderRepository.deleteFromOrderCart(id)
+        }
+    }
 }

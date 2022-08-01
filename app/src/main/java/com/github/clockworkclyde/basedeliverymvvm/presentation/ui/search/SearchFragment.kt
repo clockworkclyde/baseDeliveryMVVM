@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentSearchBinding
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScreenAdapter
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.doOnQueryTextChanged
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.search.SearchViewModel
@@ -63,10 +64,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    private fun onItemClick(item: MenuItemUiModel, dest: Int) {
+    private fun onItemClick(item: MenuItemUiModel, dest: MainScreenDelegates.ClickAction) {
         when (dest) {
-            0 -> findNavController().navigate(SearchFragmentDirections.actionToDetailsFragment(item))
-            1 -> viewModel.addToOrderCart(item)
+            MainScreenDelegates.ClickAction.OpenDetails -> findNavController().navigate(SearchFragmentDirections.actionToDetailsFragment(item))
+            MainScreenDelegates.ClickAction.AddToCart -> viewModel.addToOrderCart(item)
         }
     }
 

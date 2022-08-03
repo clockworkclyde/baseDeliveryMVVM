@@ -5,9 +5,9 @@ import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScree
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.BaseDiffUtilCallback
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
-class OrderCartAdapter : AsyncListDifferDelegationAdapter<ListItem>(BaseDiffUtilCallback()) {
+class OrderCartAdapter (onButtonClickListener: (Long, Int) -> Unit): AsyncListDifferDelegationAdapter<ListItem>(BaseDiffUtilCallback()) {
 
     init {
-        delegatesManager.addDelegate(MainScreenDelegates.orderAdapterDelegate())
+        delegatesManager.addDelegate(MainScreenDelegates.orderAdapterDelegate(onButtonClickListener = onButtonClickListener))
     }
 }

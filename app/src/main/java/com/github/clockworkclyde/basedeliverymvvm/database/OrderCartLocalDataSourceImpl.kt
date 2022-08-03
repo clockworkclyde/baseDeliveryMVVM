@@ -1,6 +1,5 @@
 package com.github.clockworkclyde.basedeliverymvvm.database
 
-import android.util.Log
 import com.github.clockworkclyde.basedeliverymvvm.database.dao.OrderCartDao
 import com.github.clockworkclyde.basedeliverymvvm.database.entities.cart.OrderCartItem
 import javax.inject.Inject
@@ -17,4 +16,7 @@ class OrderCartLocalDataSourceImpl @Inject constructor(private val orderDao: Ord
         orderDao.deleteOrderCartItem(itemId = id)
     }
 
+    suspend fun updateAmountInOrderById(id: Long, amount: Int) {
+        orderDao.updateQuantityInOrder(id, amount)
+    }
 }

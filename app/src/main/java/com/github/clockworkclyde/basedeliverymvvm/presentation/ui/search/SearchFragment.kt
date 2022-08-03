@@ -16,6 +16,8 @@ import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScree
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.doOnQueryTextChanged
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search) {
@@ -47,6 +49,19 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     if (it.isEmpty()) showEmptyResult()
                 }
             }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            val navController = findNavController()
+            navController.currentBackStackEntryFlow.map { entry ->
+                entry.savedStateHandle.get<MenuItemUiModel>("item")
+            }
+                .collectLatest { item ->
+                    if (item != null) {
+                        onItemClick(item, MainScreenDelegates.ClickAction.AddToCart)
+                        findNavController().popBackStack()
+                    }
+                }
         }
     }
 

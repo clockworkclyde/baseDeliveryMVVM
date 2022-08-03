@@ -1,7 +1,6 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.cart
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OrderCartFragment : Fragment(R.layout.fragment_cart) {
 
-    lateinit var binding: FragmentCartBinding
+    private lateinit var binding: FragmentCartBinding
     private val viewModel: OrderCartViewModel by viewModels()
-    private val adapter by lazy { OrderCartAdapter() }
+    private val adapter by lazy { OrderCartAdapter(::onQuantityButtonClick) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,5 +39,9 @@ class OrderCartFragment : Fragment(R.layout.fragment_cart) {
                 }
             }
         }
+    }
+
+    private fun onQuantityButtonClick(id: Long, diff: Int) {
+        viewModel.changeItemQuantity(id, diff)
     }
 }

@@ -19,4 +19,7 @@ interface OrderCartDao {
     @Query("DELETE FROM order_cart_items WHERE external_id LIKE :itemId")
     suspend fun deleteOrderCartItem(itemId: Long)
 
+    @Query("UPDATE order_cart_items SET total_amount = :amount WHERE external_id = :itemId")
+    suspend fun updateQuantityInOrder(itemId: Long, amount: Int)
+
 }

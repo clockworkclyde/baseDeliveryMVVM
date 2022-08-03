@@ -2,7 +2,6 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope

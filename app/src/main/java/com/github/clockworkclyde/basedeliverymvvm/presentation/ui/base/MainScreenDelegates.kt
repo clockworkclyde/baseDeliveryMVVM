@@ -12,6 +12,7 @@ import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.men
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemCartBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuProgressBinding
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProduct
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
@@ -50,7 +51,12 @@ object MainScreenDelegates {
                     servingSizeTextView.text = item.servingSize
 
                     root.onSingleClick { onItemClickListener.invoke(item, ClickAction.OpenDetails) }
-                    btnAddItemToOrderCart.onSingleClick { onItemClickListener.invoke(item, ClickAction.AddToCart) }
+                    btnAddItemToOrderCart.onSingleClick {
+                        onItemClickListener.invoke(
+                            item,
+                            ClickAction.AddToCart
+                        )
+                    }
                 }
             }
 
@@ -70,8 +76,8 @@ object MainScreenDelegates {
             bind {}
         }
 
-    fun orderAdapterDelegate() =
-        adapterDelegateViewBinding<MenuItemUiModel, ListItem, ItemCartBinding>(
+    fun orderAdapterDelegate(onButtonClickListener: (Long, Int) -> Unit) =
+        adapterDelegateViewBinding<OrderProduct, ListItem, ItemCartBinding>(
             { inflater, container ->
                 ItemCartBinding.inflate(inflater, container, false)
             }
@@ -95,6 +101,21 @@ object MainScreenDelegates {
                         )
                         .transition(withCrossFade())
                         .into(imageView)
+
+                    val quantity = item.quantity
+                    counterTextView.text = quantity.toString()
+                    lessButton.setOnClickListener {
+                        onButtonClickListener.invoke(
+                            item.id,
+                            quantity - 1
+                        )
+                    }
+                    moreButton.setOnClickListener {
+                        onButtonClickListener.invoke(
+                            item.id,
+                            quantity + 1
+                        )
+                    }
                 }
             }
         }

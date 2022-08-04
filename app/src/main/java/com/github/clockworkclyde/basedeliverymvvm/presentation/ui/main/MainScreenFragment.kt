@@ -2,6 +2,7 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -12,6 +13,7 @@ import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragm
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemError
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.MainScreenScrollListener
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.main.MainScreenViewModel
 import com.google.android.material.tabs.TabLayout
@@ -38,7 +40,7 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.errorData.transformErrorData()
+        viewModel.errorData.transformErrorData { showError() }
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -110,6 +112,22 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
         }
     }
 
+    private fun showError() {
+        binding.apply {
+            errorBody.isVisible = true
+            recyclerView.isVisible = false
+            retryButton.setOnClickListener { retryAgain() }
+        }
+    }
+
+    private fun retryAgain() {
+        binding.apply {
+            viewModel.initData()
+            errorBody.isVisible = false
+            recyclerView.isVisible = true
+        }
+    }
+
     private fun onItemClick(
         item: MenuItem,
         dest: MainScreenDelegates.ClickAction
@@ -123,7 +141,7 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun navigateToSearchFragment() {
-            findNavController().navigate(R.id.action_mainScreenFragment_to_searchFragment)
+        findNavController().navigate(R.id.action_mainScreenFragment_to_searchFragment)
     }
 
     private fun TabLayout.setNewAnchorTabs(anchors: List<String>) {

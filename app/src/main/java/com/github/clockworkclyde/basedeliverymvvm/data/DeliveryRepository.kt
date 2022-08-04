@@ -1,7 +1,6 @@
 package com.github.clockworkclyde.basedeliverymvvm.data
 
 import android.content.Context
-import android.util.Log
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemProgress
@@ -15,13 +14,12 @@ import com.github.clockworkclyde.network.api.model.MenuItemDto
 import com.github.clockworkclyde.network.api.model.PagingState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 class DeliveryRepository @Inject constructor(
     private val remoteDataSource: DeliveryRemoteDataSourceImpl,
     private val localDataSource: DeliveryLocalDataSourceImpl,
-    private val context: Context
+    private val applicationContext: Context
 ) {
 
     private val dataState =
@@ -34,7 +32,7 @@ class DeliveryRepository @Inject constructor(
                 listOf(MenuCategoryItem("_", progressObjects))
             }
             is PagingState.Content -> state.data
-            is PagingState.Error -> throw state.throwable //todo handler
+            is PagingState.Error -> throw state.throwable
             else -> throw NullPointerException("Wrong for this $state")
         }
     }
@@ -46,9 +44,9 @@ class DeliveryRepository @Inject constructor(
             if (isForcedRefresh || dataState.value is PagingState.Error) {
                 localDataSource.clearCategoriesAndItems()
                 val categories = listOf(
-                    context.getString(R.string.kfc),
-                    context.getString(R.string.pizza),
-                    context.getString(
+                    applicationContext.getString(R.string.pizza),
+                    applicationContext.getString(R.string.kfc),
+                    applicationContext.getString(
                         R.string.sushi
                     )
                 )
@@ -66,17 +64,17 @@ class DeliveryRepository @Inject constructor(
                 }
                 localDataSource.insertCategoriesWithItems(categoryModels)
             }
-            val mappedDbResponse =
-                withContext(Dispatchers.IO) {
-                    localDataSource.getLatestCategoriesData().map {
-                        MenuCategoryItem(it.category.title, mapEntityToUi(it.items))
-                    }
-                }
-            if (mappedDbResponse.isEmpty()) {
-                init(true)
-            }
-            dataState.emit(PagingState.Content(mappedDbResponse))
         }
+        val mappedDbResponse =
+            withContext(Dispatchers.IO) {
+                localDataSource.getLatestCategoriesData().map {
+                    MenuCategoryItem(it.category.title, mapEntityToUi(it.items))
+                }
+            }
+        if (mappedDbResponse.isEmpty()) {
+            init(true)
+        }
+        dataState.emit(PagingState.Content(mappedDbResponse))
     }
 
     fun search(query: String): Flow<List<MenuItem>> {
@@ -93,7 +91,6 @@ class DeliveryRepository @Inject constructor(
         }
         return items
     }
-
 
     private fun mapDtoToEntity(
         items: List<MenuItemDto>,

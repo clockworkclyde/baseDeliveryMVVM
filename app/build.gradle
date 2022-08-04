@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation project(':network-api')
 
+    implementation libs.timber
     implementation libs.coreKtx
     implementation libs.appcompat
     implementation libs.material

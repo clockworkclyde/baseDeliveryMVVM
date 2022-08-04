@@ -10,4 +10,6 @@
     <string name="empty_result">Empty result</string>
     <string name="total_price">Create order for $$$</string>
     <string name="toast_error">Error. Please retry</string>
+    <string name="wrong">Something was going wrong</string>
+    <string name="retry">Retry</string>
 </resources>

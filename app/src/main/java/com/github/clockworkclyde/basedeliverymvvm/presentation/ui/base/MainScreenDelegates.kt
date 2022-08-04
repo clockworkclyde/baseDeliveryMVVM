@@ -6,13 +6,13 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.github.clockworkclyde.basedeliverymvvm.R
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemProgress
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemCartBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuProgressBinding
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProductItem
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemProgress
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 

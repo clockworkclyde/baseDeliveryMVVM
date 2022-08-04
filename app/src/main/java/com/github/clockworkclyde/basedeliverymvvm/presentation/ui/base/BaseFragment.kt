@@ -15,19 +15,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.sample
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     protected open var bottomNavigationViewVisibility = View.VISIBLE
+    private var responseErrorViewVisibility = View.INVISIBLE
 
-    fun <T : Throwable> Flow<T>.transformErrorData() {
+    fun <T : Throwable> Flow<T>.transformErrorData(block: () -> Unit) {
         lifecycleScope.launch {
-            sample(1000L).collect {
-                if (lifecycle.currentState >= Lifecycle.State.STARTED) {
-                    Toast.makeText(context, getString(R.string.toast_error), Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
+            collect { block.invoke() }
         }
     }
 

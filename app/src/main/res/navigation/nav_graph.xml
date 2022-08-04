@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainScreenFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScreenFragment"
-        android:label="Home"
+        android:label="@string/home"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainScreenFragment_to_searchFragment"
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/orderCartFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.cart.OrderCartFragment"
-        android:label="fragment_cart"
+        android:label="@string/cart"
         tools:layout="@layout/fragment_cart" />
 
     <action

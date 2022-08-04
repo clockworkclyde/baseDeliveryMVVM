@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentMainBinding
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
@@ -21,7 +22,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainScreenFragment : Fragment(R.layout.fragment_main) {
+class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
+
+    override var bottomNavigationViewVisibility: Int = View.VISIBLE
 
     private lateinit var binding: FragmentMainBinding
     private val adapter by lazy { MainScreenAdapter(::onItemClick) }
@@ -100,15 +103,9 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
         inflater.inflate(R.menu.main_menu, menu)
 
         val searchButton = menu.findItem(R.id.searchButton)
-        val cartButton = menu.findItem(R.id.cartButton)
-
-        cartButton.setOnMenuItemClickListener {
-            navigateToFragment(Destination.OrderCart)
-            true
-        }
 
         searchButton.setOnMenuItemClickListener {
-            navigateToFragment(Destination.Search)
+            navigateToSearchFragment()
             true
         }
     }
@@ -125,11 +122,8 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    private fun navigateToFragment(dest: Destination) {
-        when (dest) {
-            Destination.OrderCart -> findNavController().navigate(R.id.action_to_orderCartFragment)
-            Destination.Search -> findNavController().navigate(R.id.action_mainScreenFragment_to_searchFragment)
-        }
+    private fun navigateToSearchFragment() {
+            findNavController().navigate(R.id.action_mainScreenFragment_to_searchFragment)
     }
 
     private fun TabLayout.setNewAnchorTabs(anchors: List<String>) {
@@ -142,9 +136,4 @@ class MainScreenFragment : Fragment(R.layout.fragment_main) {
         }
         if (anchors.size > 3) tabMode = TabLayout.MODE_SCROLLABLE // todo edit
     }
-
-    private enum class Destination {
-        OrderCart, Search
-    }
-
 }

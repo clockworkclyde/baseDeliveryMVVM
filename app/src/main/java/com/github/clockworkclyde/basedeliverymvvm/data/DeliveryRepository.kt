@@ -1,6 +1,7 @@
 package com.github.clockworkclyde.basedeliverymvvm.data
 
 import android.content.Context
+import android.util.Log
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemProgress
@@ -33,8 +34,8 @@ class DeliveryRepository @Inject constructor(
                 listOf(MenuCategoryItem("_", progressObjects))
             }
             is PagingState.Content -> state.data
-            is PagingState.Error -> throw UnknownHostException("Network mechanism error") //todo handler
-            else -> throw NullPointerException("wrong state exception for paging state $state")
+            is PagingState.Error -> throw state.throwable //todo handler
+            else -> throw NullPointerException("Wrong for this $state")
         }
     }
 

@@ -38,6 +38,7 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.errorData.transformErrorData()
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }

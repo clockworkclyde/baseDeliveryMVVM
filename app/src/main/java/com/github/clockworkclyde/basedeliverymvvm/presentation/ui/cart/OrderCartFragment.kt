@@ -47,8 +47,9 @@ class OrderCartFragment : BaseFragment(R.layout.fragment_cart) {
 
     private fun calculateTotalPrice(list: List<OrderProduct>) {
         if (list.isNotEmpty()) {
+            binding.createOrderButton.isVisible = true
             val totalPrice = list.sumOf { item -> item.price * item.quantity }
-            binding.createOrderButton.text = "Total price is $totalPrice"
+            binding.createOrderButton.text = "Total price is $totalPrice p."
         } else {
             binding.createOrderButton.isVisible = false
         }

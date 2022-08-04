@@ -6,7 +6,7 @@ data class OrderProduct(
     val id: Long,
     val title: String,
     val image: String,
-    val price: Double,
+    val price: Int,
     val servingSize: String,
     val quantity: Int = 1
 ): ListItem {

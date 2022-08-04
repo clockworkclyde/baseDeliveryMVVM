@@ -103,7 +103,7 @@ class DeliveryRepository @Inject constructor(
                 id = it.id,
                 title = it.title,
                 imageUrl = it.image,
-                price = 399.99,
+                price = 399,
                 servingSize = it.servingSize ?: "",
                 categoryId = categoryId
             )

@@ -10,6 +10,6 @@ data class OrderCartItem(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
     @ColumnInfo(name = "serving_size") val servingSize: String,
-    @ColumnInfo(name = "item_price") val price: Double,
-    @ColumnInfo(name = "total_amount") val count: Int
+    @ColumnInfo(name = "item_price") val price: Int,
+    @ColumnInfo(name = "total_amount") val count: Int = 1
 )

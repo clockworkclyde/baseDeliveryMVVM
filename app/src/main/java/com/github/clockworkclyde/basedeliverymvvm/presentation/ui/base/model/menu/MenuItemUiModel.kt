@@ -10,7 +10,7 @@ data class MenuItemUiModel(
     val id: Long,
     val title: String,
     val image: String,
-    val price: Double,
+    val price: Int,
     val servingSize: String
 ) : ListItem, Parcelable {
     @IgnoredOnParcel

@@ -19,7 +19,7 @@ data class CachedCategoryItem(
     @ColumnInfo(name = "id_external") @PrimaryKey(autoGenerate = false) val id: Long = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
-    @ColumnInfo(name = "price_rubles") val price: Double,
+    @ColumnInfo(name = "price_rubles") val price: Int,
     @ColumnInfo(name = "serving_size_type") val servingSize: String,
 
     @ColumnInfo(name = "id_category_owner") val categoryId: Long = 0

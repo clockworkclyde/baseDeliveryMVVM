@@ -22,6 +22,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/createOrderButton"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:layout_width="0dp"
         android:layout_margin="4dp"
         android:layout_height="wrap_content"

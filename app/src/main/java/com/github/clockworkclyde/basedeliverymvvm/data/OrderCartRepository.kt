@@ -26,16 +26,6 @@ class OrderCartRepository @Inject constructor(private val localDataSource: Order
         localDataSource.updateAmountInOrderById(id, amount)
     }
 
-//    private fun mapEntitiesToUi(items: List<OrderCartItem>) = items.map {
-//        MenuItemUiModel(
-//            id = it.id,
-//            title = it.title,
-//            image = it.imageUrl,
-//            price = it.price,
-//            servingSize = it.servingSize,
-//        )
-//    }
-
     private fun mapEntitiesToOrder(items: List<OrderCartItem>) = items.map {
         OrderProduct(
             id = it.id,
@@ -51,7 +41,6 @@ class OrderCartRepository @Inject constructor(private val localDataSource: Order
         title = item.title,
         imageUrl = item.image,
         servingSize = item.servingSize,
-        price = item.price,
-        count = 1
+        price = item.price
     )
 }

@@ -37,7 +37,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
-        (activity as MainActivity?)?.setBottomNavigationViewVisibility(View.INVISIBLE)
         return binding.root
     }
 

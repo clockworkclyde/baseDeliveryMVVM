@@ -10,7 +10,7 @@ import com.github.clockworkclyde.basedeliverymvvm.database.entities.main.CachedC
 
 @Database(
     entities = [CachedCategory::class, CachedCategoryItem::class, OrderCartItem::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class BaseDeliveryDatabase : RoomDatabase() {

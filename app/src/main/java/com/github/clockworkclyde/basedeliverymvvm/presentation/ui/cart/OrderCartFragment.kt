@@ -9,11 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentCartBinding
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.cart.OrderCartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OrderCartFragment : Fragment(R.layout.fragment_cart) {
+class OrderCartFragment : BaseFragment(R.layout.fragment_cart) {
+
+    override var bottomNavigationViewVisibility: Int = View.VISIBLE
 
     private lateinit var binding: FragmentCartBinding
     private val viewModel: OrderCartViewModel by viewModels()

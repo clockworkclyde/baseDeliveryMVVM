@@ -52,6 +52,6 @@ class OrderCartRepository @Inject constructor(private val localDataSource: Order
         imageUrl = item.image,
         servingSize = item.servingSize,
         price = item.price,
-        count = 1 // todo counter
+        count = 1
     )
 }

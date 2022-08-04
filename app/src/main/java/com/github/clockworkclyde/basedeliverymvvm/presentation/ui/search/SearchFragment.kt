@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentSearchBinding
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.MainActivity
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScreenAdapter
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.doOnQueryTextChanged
@@ -20,7 +22,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class SearchFragment : BaseFragment(R.layout.fragment_search) {
+
+    override var bottomNavigationViewVisibility: Int = View.INVISIBLE
 
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModels()
@@ -33,6 +37,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
+        (activity as MainActivity?)?.setBottomNavigationViewVisibility(View.INVISIBLE)
         return binding.root
     }
 

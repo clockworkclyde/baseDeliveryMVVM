@@ -6,7 +6,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MenuItemUiModel(
+data class MenuItem(
     val id: Long,
     val title: String,
     val image: String,

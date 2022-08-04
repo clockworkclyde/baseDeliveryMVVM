@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentCartBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProduct
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProductItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.cart.OrderCartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +45,7 @@ class OrderCartFragment : BaseFragment(R.layout.fragment_cart) {
         }
     }
 
-    private fun calculateTotalPrice(list: List<OrderProduct>) {
+    private fun calculateTotalPrice(list: List<OrderProductItem>) {
         if (list.isNotEmpty()) {
             binding.createOrderButton.isVisible = true
             val totalPrice = list.sumOf { item -> item.price * item.quantity }

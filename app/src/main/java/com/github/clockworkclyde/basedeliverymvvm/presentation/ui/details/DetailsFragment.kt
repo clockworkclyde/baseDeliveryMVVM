@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentDetailsBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseDialogFragment
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getScreenSize
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
 
@@ -53,7 +53,7 @@ class DetailsFragment : BaseDialogFragment() {
         }
     }
 
-    private fun provideOrderCartClick(item: MenuItemUiModel) {
+    private fun provideOrderCartClick(item: MenuItem) {
         val navController = findNavController()
         navController.previousBackStackEntry?.savedStateHandle?.set("item", item)
         navController.popBackStack()

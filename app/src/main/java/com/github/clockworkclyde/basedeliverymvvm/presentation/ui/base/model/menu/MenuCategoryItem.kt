@@ -2,7 +2,7 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.me
 
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 
-data class MenuCategoryUiModel(
+data class MenuCategoryItem(
     val category: String,
     val items: List<ListItem>
 )

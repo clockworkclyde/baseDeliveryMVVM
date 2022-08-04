@@ -26,7 +26,7 @@
         tools:layout="@layout/fragment_details">
         <argument
             android:name="menuItem"
-            app:argType="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel" />
+            app:argType="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem" />
     </dialog>
     <fragment
         android:id="@+id/orderCartFragment"

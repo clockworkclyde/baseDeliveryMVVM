@@ -1,20 +1,20 @@
 package com.github.clockworkclyde.basedeliverymvvm.data
 
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
 import com.github.clockworkclyde.basedeliverymvvm.database.OrderCartLocalDataSourceImpl
 import com.github.clockworkclyde.basedeliverymvvm.database.entities.cart.OrderCartItem
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProduct
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProductItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class OrderCartRepository @Inject constructor(private val localDataSource: OrderCartLocalDataSourceImpl) {
 
-    fun getOrderCart(): Flow<List<OrderProduct>> = localDataSource.data().map { entities ->
+    fun getOrderCart(): Flow<List<OrderProductItem>> = localDataSource.data().map { entities ->
         mapEntitiesToOrder(entities)
     }
 
-    suspend fun addToOrderCart(item: MenuItemUiModel) {
+    suspend fun addToOrderCart(item: MenuItem) {
         localDataSource.insertOrderCartItem(mapUiToEntity(item))
     }
 
@@ -27,7 +27,7 @@ class OrderCartRepository @Inject constructor(private val localDataSource: Order
     }
 
     private fun mapEntitiesToOrder(items: List<OrderCartItem>) = items.map {
-        OrderProduct(
+        OrderProductItem(
             id = it.id,
             title = it.title,
             image = it.imageUrl,
@@ -36,7 +36,7 @@ class OrderCartRepository @Inject constructor(private val localDataSource: Order
             quantity = it.count
         )
     }
-    private fun mapUiToEntity(item: MenuItemUiModel) = OrderCartItem(
+    private fun mapUiToEntity(item: MenuItem) = OrderCartItem(
         id = item.id,
         title = item.title,
         imageUrl = item.image,

@@ -2,9 +2,9 @@ package com.github.clockworkclyde.basedeliverymvvm.data
 
 import android.content.Context
 import com.github.clockworkclyde.basedeliverymvvm.R
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryUiModel
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemProgressModel
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryItem
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemProgress
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
 import com.github.clockworkclyde.basedeliverymvvm.database.DeliveryLocalDataSourceImpl
 import com.github.clockworkclyde.basedeliverymvvm.database.entities.main.CachedCategory
 import com.github.clockworkclyde.basedeliverymvvm.database.entities.main.CachedCategoryItem
@@ -24,13 +24,13 @@ class DeliveryRepository @Inject constructor(
 ) {
 
     private val dataState =
-        MutableStateFlow<PagingState<List<MenuCategoryUiModel>>>(PagingState.Loading)
+        MutableStateFlow<PagingState<List<MenuCategoryItem>>>(PagingState.Loading)
 
-    fun data(): Flow<List<MenuCategoryUiModel>> = dataState.map { state ->
+    fun data(): Flow<List<MenuCategoryItem>> = dataState.map { state ->
         when (state) {
             is PagingState.Loading -> {
-                val progressObjects = IntRange(1, 10).map { MenuItemProgressModel }
-                listOf(MenuCategoryUiModel("_", progressObjects))
+                val progressObjects = IntRange(1, 10).map { MenuItemProgress }
+                listOf(MenuCategoryItem("_", progressObjects))
             }
             is PagingState.Content -> state.data
             is PagingState.Error -> throw UnknownHostException("Network mechanism error") //todo handler
@@ -68,7 +68,7 @@ class DeliveryRepository @Inject constructor(
             val mappedDbResponse =
                 withContext(Dispatchers.IO) {
                     localDataSource.getLatestCategoriesData().map {
-                        MenuCategoryUiModel(it.category.title, mapEntityToUi(it.items))
+                        MenuCategoryItem(it.category.title, mapEntityToUi(it.items))
                     }
                 }
             if (mappedDbResponse.isEmpty()) {
@@ -78,10 +78,10 @@ class DeliveryRepository @Inject constructor(
         }
     }
 
-    fun search(query: String): Flow<List<MenuItemUiModel>> {
+    fun search(query: String): Flow<List<MenuItem>> {
         val items = localDataSource.searchInCategoriesData(query).map { dbItems ->
             dbItems.map {
-                MenuItemUiModel(
+                MenuItem(
                     id = it.id,
                     title = it.title,
                     image = it.imageUrl,
@@ -109,8 +109,8 @@ class DeliveryRepository @Inject constructor(
             )
         }
 
-    private fun mapEntityToUi(items: List<CachedCategoryItem>): List<MenuItemUiModel> = items.map {
-        MenuItemUiModel(
+    private fun mapEntityToUi(items: List<CachedCategoryItem>): List<MenuItem> = items.map {
+        MenuItem(
             id = it.id,
             title = it.title,
             image = it.imageUrl,

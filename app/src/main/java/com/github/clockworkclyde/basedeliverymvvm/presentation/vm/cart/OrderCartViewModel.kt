@@ -2,7 +2,7 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.cart
 
 import androidx.lifecycle.viewModelScope
 import com.github.clockworkclyde.basedeliverymvvm.data.OrderCartRepository
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProduct
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProductItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +15,7 @@ class OrderCartViewModel @Inject constructor(
     private val orderRepository: OrderCartRepository
 ) : BaseViewModel() {
 
-    private val _data = MutableStateFlow<List<OrderProduct>>(emptyList())
+    private val _data = MutableStateFlow<List<OrderProductItem>>(emptyList())
     val data = _data.asStateFlow()
 
     init {
@@ -27,11 +27,12 @@ class OrderCartViewModel @Inject constructor(
     }
 
     fun changeItemQuantity(id: Long, value: Int) {
-        if (value == 0) {
-            deleteById(id)
-            return
+        if (value > 0) {
+            updateQuantityInOrderById(id, value)
         }
-        updateQuantityInOrderById(id, value)
+        else {
+            deleteById(id)
+        }
     }
 
     private fun updateQuantityInOrderById(id: Long, quantity: Int) {

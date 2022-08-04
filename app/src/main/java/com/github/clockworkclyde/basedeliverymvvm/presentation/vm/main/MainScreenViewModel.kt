@@ -2,9 +2,9 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.main
 
 import androidx.lifecycle.viewModelScope
 import com.github.clockworkclyde.basedeliverymvvm.data.DeliveryRepository
-import com.github.clockworkclyde.basedeliverymvvm.domain.usecases.AddToOrderCartUseCase
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryUiModel
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
+import com.github.clockworkclyde.basedeliverymvvm.data.OrderCartRepository
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryItem
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,10 +15,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     private val deliveryRepository: DeliveryRepository,
-    private val useCase: AddToOrderCartUseCase
+    private val orderRepository: OrderCartRepository
 ) : BaseViewModel() {
 
-    private val _data = MutableStateFlow<List<MenuCategoryUiModel>>(emptyList())
+    private val _data = MutableStateFlow<List<MenuCategoryItem>>(emptyList())
     val data = _data.asStateFlow()
 
     private fun initData() {
@@ -36,7 +36,7 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
-    fun addToOrderCart(item: MenuItemUiModel) {
-        viewModelScope.launch { useCase.execute(item) }
+    fun addToOrderCart(item: MenuItem) {
+        viewModelScope.launch { orderRepository.addToOrderCart(item) }
     }
 }

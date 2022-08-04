@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.clockworkclyde.basedeliverymvvm.R
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemUiModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentSearchBinding
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.MainActivity
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScreenAdapter
@@ -58,7 +56,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             val navController = findNavController()
             navController.currentBackStackEntryFlow.map { entry ->
-                entry.savedStateHandle.get<MenuItemUiModel>("item")
+                entry.savedStateHandle.get<MenuItem>("item")
             }
                 .collectLatest { item ->
                     if (item != null) {
@@ -83,7 +81,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
     }
 
-    private fun onItemClick(item: MenuItemUiModel, dest: MainScreenDelegates.ClickAction) {
+    private fun onItemClick(item: MenuItem, dest: MainScreenDelegates.ClickAction) {
         when (dest) {
             MainScreenDelegates.ClickAction.OpenDetails -> findNavController().navigate(SearchFragmentDirections.actionToDetailsFragment(item))
             MainScreenDelegates.ClickAction.AddToCart -> viewModel.addToOrderCart(item)

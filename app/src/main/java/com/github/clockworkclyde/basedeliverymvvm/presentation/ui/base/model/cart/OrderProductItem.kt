@@ -2,7 +2,7 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.ca
 
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 
-data class OrderProduct(
+data class OrderProductItem(
     val id: Long,
     val title: String,
     val image: String,

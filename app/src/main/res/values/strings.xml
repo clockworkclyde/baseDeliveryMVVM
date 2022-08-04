@@ -6,7 +6,10 @@
     <string name="pizza">pizza</string>
     <string name="sushi">sushi</string>
     <string name="search">Search</string>
+<<<<<<< HEAD
     <string name="search_hint">For example, Grill</string>
     <string name="empty_result">Empty result</string>
     <string name="total_price">Create order for $$$</string>
+=======
+>>>>>>> a19a1a27ebd7df29cb7a6a4a660ee5895bb21a96
 </resources>

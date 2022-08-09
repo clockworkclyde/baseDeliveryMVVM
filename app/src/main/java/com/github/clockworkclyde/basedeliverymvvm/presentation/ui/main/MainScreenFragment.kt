@@ -6,15 +6,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentMainBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemError
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.MainScreenScrollListener
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.ListMediator
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.main.MainScreenViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,46 +29,32 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
     private val adapter by lazy { MainScreenAdapter(::onItemClick) }
     private val viewModel: MainScreenViewModel by viewModels()
 
-    companion object {
-        const val initialAnchorValue = 0
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.errorData.transformErrorData { showError() }
+        viewModel.errorData.addOnExceptionListener { showError() }
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val anchors = arrayListOf(initialAnchorValue)
-        var contentListSize = 0
         setHasOptionsMenu(true)
 
         with(binding) {
             recyclerView.adapter = adapter
             recyclerView.setHasFixedSize(true)
+            val mediator = ListMediator(recyclerView, tabLayout)
 
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.data.map { categories ->
-                    val contentList = arrayListOf<ListItem>()
-                    val categoryTabs = mutableListOf<String>()
-                    categories.map {
-                        contentList.addAll(it.items)
-                        anchors.add(anchors.last().toInt().plus(it.items.size))
-                        categoryTabs.add(it.category)
-                    }
-                    tabLayout.setNewAnchorTabs(categoryTabs)
-                    contentList
+                viewModel.data.collect {
+                    tabLayout.setTabs(it)
+                    adapter.items = it
+                    mediator.updateWithAnchors(it.indices.toList())
+                    mediator.attach()
                 }
-                    .collect {
-                        contentListSize = it.size
-                        adapter.items = it.toList()
-                    }
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -84,20 +68,15 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
                         }
                     }
             }
-
-            val manager = recyclerView.layoutManager as GridLayoutManager
-            val scrollListener =
-                MainScreenScrollListener(
-                    manager,
-                    tabLayout,
-                    contentListSize,
-                    anchors,
-                    requireContext()
-                )
-
-            tabLayout.addOnTabSelectedListener(scrollListener.TabLayoutTabListener())
-            recyclerView.addOnScrollListener(scrollListener.RecyclerScrollListener())
         }
+    }
+
+    private fun TabLayout.setTabs(categories: List<MenuCategoryItem>) {
+        removeAllTabs()
+        for (category in categories) {
+            addTab(newTab().setText(category.title))
+        }
+        if (categories.size > 3) tabMode = TabLayout.MODE_SCROLLABLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -142,16 +121,5 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun navigateToSearchFragment() {
         findNavController().navigate(R.id.action_mainScreenFragment_to_searchFragment)
-    }
-
-    private fun TabLayout.setNewAnchorTabs(anchors: List<String>) {
-        removeAllTabs()
-        if (anchors.contains("_")) {
-            return
-        }
-        anchors.onEach {
-            addTab(this.newTab().setText(it))
-        }
-        if (anchors.size > 3) tabMode = TabLayout.MODE_SCROLLABLE // todo edit
     }
 }

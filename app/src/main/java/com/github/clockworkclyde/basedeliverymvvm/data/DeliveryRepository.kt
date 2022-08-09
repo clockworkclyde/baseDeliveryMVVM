@@ -29,7 +29,7 @@ class DeliveryRepository @Inject constructor(
         when (state) {
             is PagingState.Loading -> {
                 val progressObjects = IntRange(1, 10).map { MenuItemProgress }
-                listOf(MenuCategoryItem("_", progressObjects))
+                listOf(MenuCategoryItem("", progressObjects))
             }
             is PagingState.Content -> state.data
             is PagingState.Error -> throw state.throwable

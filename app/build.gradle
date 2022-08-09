@@ -47,7 +47,6 @@ dependencies {
     implementation libs.appcompat
     implementation libs.material
     implementation libs.constraint
-
     implementation libs.glide
     implementation libs.adapterDelegates
     implementation libs.adapterDelegatesViewBinding
@@ -55,10 +54,10 @@ dependencies {
     kapt libs.daggerHiltKapt
     implementation libs.navigationUiFragmentKtx
     implementation libs.navigationUiKtx
-
     implementation libs.room
     implementation libs.roomKtx
     kapt libs.roomCompiler
+    implementation libs.shimmer
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

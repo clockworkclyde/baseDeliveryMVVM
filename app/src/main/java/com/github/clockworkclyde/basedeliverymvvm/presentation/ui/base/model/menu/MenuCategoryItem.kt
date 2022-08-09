@@ -3,6 +3,8 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.me
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 
 data class MenuCategoryItem(
-    val category: String,
+    val title: String,
     val items: List<ListItem>
-)
+): ListItem {
+    override val itemId: Long = items.hashCode().toLong()
+}

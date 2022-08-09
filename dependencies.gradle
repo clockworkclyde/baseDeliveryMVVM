@@ -43,6 +43,9 @@ ext.libs = [
         // Room
         room                       : "androidx.room:room-runtime:$versions.room",
         roomKtx                    : "androidx.room:room-ktx:$versions.room",
-        roomCompiler               : "androidx.room:room-compiler:$versions.room"
+        roomCompiler               : "androidx.room:room-compiler:$versions.room",
+
+        // Shimmer progress loading
+        shimmer                    : "com.facebook.shimmer:shimmer:0.1.0@aar",
 
 ]

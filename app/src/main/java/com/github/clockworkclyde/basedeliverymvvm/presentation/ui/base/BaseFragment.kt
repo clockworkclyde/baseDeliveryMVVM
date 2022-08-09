@@ -22,7 +22,7 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
     protected open var bottomNavigationViewVisibility = View.VISIBLE
     private var responseErrorViewVisibility = View.INVISIBLE
 
-    fun <T : Throwable> Flow<T>.transformErrorData(block: () -> Unit) {
+    fun <T : Throwable> Flow<T>.addOnExceptionListener(block: () -> Unit) {
         lifecycleScope.launch {
             collect { block.invoke() }
         }

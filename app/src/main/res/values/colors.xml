@@ -13,6 +13,7 @@
     <color name="cart_divider_background">@color/space_blue</color>
 
     <color name="mint">#8AAF8B</color>
+    <color name="shimmer">#DDDDDD</color>
 
     <color name="dark_placeholder">#FF4F4F4F</color>
     <color name="placeholder">#c4c6c7</color>

@@ -7,12 +7,15 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemCartBinding
+import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemCategoryBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuProgressBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProductItem
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItemProgress
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.CategoryAdapter
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
@@ -22,7 +25,19 @@ object MainScreenDelegates {
         OpenDetails, AddToCart
     }
 
-    fun mainScreenAdapterDelegate(
+    fun categoryAdapterDelegate(onItemClickListener: (MenuItem, ClickAction) -> Unit) =
+        adapterDelegateViewBinding<MenuCategoryItem, ListItem, ItemCategoryBinding>({ inflater, container ->
+            ItemCategoryBinding.inflate(inflater, container, false)
+        }) {
+            val adapter = CategoryAdapter(onItemClickListener)
+            binding.recyclerView.adapter = adapter
+
+            bind {
+                adapter.items = item.items
+            }
+        }
+
+    fun menuItemsAdapterDelegate(
         onItemClickListener: (MenuItem, ClickAction) -> Unit
     ) =
         adapterDelegateViewBinding<MenuItem, ListItem, ItemMenuBinding>(
@@ -67,7 +82,7 @@ object MainScreenDelegates {
             }
         }
 
-    fun mainScreenProgressAdapterDelegate() =
+    fun menuItemsProgressAdapterDelegate() =
         adapterDelegateViewBinding<MenuItemProgress, ListItem, ItemMenuProgressBinding>(
             { inflater, container ->
                 ItemMenuProgressBinding.inflate(inflater, container, false)

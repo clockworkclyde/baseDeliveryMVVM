@@ -1,14 +1,16 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.main
 
 import androidx.lifecycle.viewModelScope
-import com.github.clockworkclyde.basedeliverymvvm.data.DeliveryRepository
-import com.github.clockworkclyde.basedeliverymvvm.data.OrderCartRepository
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuCategoryItem
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
+import com.github.clockworkclyde.basedeliverymvvm.data.repository.DeliveryRepository
+import com.github.clockworkclyde.basedeliverymvvm.data.repository.OrderCartRepository
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
+import com.github.clockworkclyde.models.ui.menu.DishItem
+import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
+import com.github.clockworkclyde.network.api.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,25 +20,28 @@ class MainScreenViewModel @Inject constructor(
     private val orderRepository: OrderCartRepository
 ) : BaseViewModel() {
 
-    private val _data = MutableStateFlow<List<MenuCategoryItem>>(emptyList())
-    val data = _data.asStateFlow()
+    private val _data = MutableStateFlow<ViewState<List<DishesCategoryItem>>>(ViewState.Loading)
+    val data: StateFlow<ViewState<List<DishesCategoryItem>>> get() = _data
 
-    fun initData() {
-        viewModelScope.launch(errorHandler) {
-            deliveryRepository.init(true)
+    @OptIn(FlowPreview::class)
+    fun fetchLatestData() {
+        viewModelScope.launch(Dispatchers.IO + errorHandler) {
+            deliveryRepository.getDishes()
+                .flatMapMerge {
+                    deliveryRepository.fetchDishes()
+                    flow { emit(it) }
+                }
+                .collect {
+                    if (it.isNotEmpty()) {
+                        _data.value = ViewState.Success(it)
+                    } else {
+                        _data.value = ViewState.Empty
+                    }
+                }
         }
     }
 
-    init {
-        viewModelScope.launch(errorHandler) {
-            initData()
-            deliveryRepository.data().collect {
-                _data.value = it
-            }
-        }
-    }
-
-    fun addToOrderCart(item: MenuItem) {
-        viewModelScope.launch(errorHandler) { orderRepository.addToOrderCart(item) }
+    fun addToOrderCart(item: DishItem) {
+        viewModelScope.launch { orderRepository.addToOrderCart(item) }
     }
 }

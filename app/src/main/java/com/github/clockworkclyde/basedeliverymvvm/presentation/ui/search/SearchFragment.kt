@@ -8,13 +8,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.clockworkclyde.basedeliverymvvm.R
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentSearchBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScreenAdapter
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.doOnQueryTextChanged
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.search.SearchViewModel
+import com.github.clockworkclyde.models.ui.menu.DishItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -56,7 +56,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             val navController = findNavController()
             navController.currentBackStackEntryFlow.map { entry ->
-                entry.savedStateHandle.get<MenuItem>("item")
+                entry.savedStateHandle.get<DishItem>("item")
             }
                 .collectLatest { item ->
                     if (item != null) {
@@ -65,6 +65,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                     }
                 }
         }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -81,14 +83,17 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
     }
 
-    private fun onItemClick(item: MenuItem, dest: MainScreenDelegates.ClickAction) {
+    private fun onItemClick(item: DishItem, dest: MainScreenDelegates.ClickAction) {
         when (dest) {
-            MainScreenDelegates.ClickAction.OpenDetails -> findNavController().navigate(SearchFragmentDirections.actionToDetailsFragment(item))
+            MainScreenDelegates.ClickAction.OpenDetails -> findNavController().navigate(
+                SearchFragmentDirections.actionToDetailsFragment(item)
+            )
             MainScreenDelegates.ClickAction.AddToCart -> viewModel.addToOrderCart(item)
         }
     }
 
     private fun showEmptyResult() {
-        Toast.makeText(requireContext(), getString(R.string.empty_result), Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.empty_result), Toast.LENGTH_SHORT)
+            .show()
     }
 }

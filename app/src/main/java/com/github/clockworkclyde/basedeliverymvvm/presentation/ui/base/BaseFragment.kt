@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.MainActivity
 import kotlinx.coroutines.flow.Flow
@@ -20,11 +21,12 @@ import java.net.UnknownHostException
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     protected open var bottomNavigationViewVisibility = View.VISIBLE
-    private var responseErrorViewVisibility = View.INVISIBLE
 
     fun <T : Throwable> Flow<T>.addOnExceptionListener(block: () -> Unit) {
-        lifecycleScope.launch {
-            collect { block.invoke() }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                collect { block.invoke() }
+            }
         }
     }
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.RoundedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:rfl_cornerTopLeftRadius="10dp"
+    app:rfl_cornerTopRightRadius="10dp"
     tools:context=".presentation.ui.details.DetailsFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -58,4 +60,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-</FrameLayout>
+</com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.RoundedFrameLayout>

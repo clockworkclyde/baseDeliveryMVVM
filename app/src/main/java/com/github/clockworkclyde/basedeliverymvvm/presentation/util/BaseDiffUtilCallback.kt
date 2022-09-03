@@ -1,7 +1,7 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.base.ListItem
+import com.github.clockworkclyde.models.ui.base.ListItem
 
 open class BaseDiffUtilCallback: DiffUtil.ItemCallback<ListItem>() {
 

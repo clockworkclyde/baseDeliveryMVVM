@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentDetailsBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseDialogFragment
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
+import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getScreenSize
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
 
@@ -35,14 +35,15 @@ class DetailsFragment : BaseDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val screenSize = getScreenSize(requireContext())
-        val item = args.menuItem
         with(binding) {
+            val screenSize = getScreenSize(requireContext())
+            val item = args.dishItem
+            val radius = resources.getDimensionPixelOffset(R.dimen.card_radius).toFloat()
             glide.load(item.image)
                 .override(screenSize.x, (screenSize.y * 9f / 16).toInt())
                 .transform(
                     CenterCrop(),
-                    RoundedCorners(resources.getDimensionPixelOffset(R.dimen.card_radius))
+                    RoundedCorners(10)
                 )
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
@@ -53,7 +54,7 @@ class DetailsFragment : BaseDialogFragment() {
         }
     }
 
-    private fun provideOrderCartClick(item: MenuItem) {
+    private fun provideOrderCartClick(item: DishItem) {
         val navController = findNavController()
         navController.previousBackStackEntry?.savedStateHandle?.set("item", item)
         navController.popBackStack()

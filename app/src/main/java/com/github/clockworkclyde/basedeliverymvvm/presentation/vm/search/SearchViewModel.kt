@@ -1,9 +1,9 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.search
 
 import androidx.lifecycle.viewModelScope
-import com.github.clockworkclyde.basedeliverymvvm.data.DeliveryRepository
-import com.github.clockworkclyde.basedeliverymvvm.data.OrderCartRepository
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.menu.MenuItem
+import com.github.clockworkclyde.basedeliverymvvm.data.repository.DeliveryRepository
+import com.github.clockworkclyde.basedeliverymvvm.data.repository.OrderCartRepository
+import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,7 +30,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch { _searchQuery.value = query }
     }
 
-    fun addToOrderCart(item: MenuItem) {
+    fun addToOrderCart(item: DishItem) {
         viewModelScope.launch { orderRepository.addToOrderCart(item) }
     }
 }

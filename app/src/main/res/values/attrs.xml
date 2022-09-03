@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundedFrameLayout">
+        <attr name="rfl_cornerRadius" format="dimension" />
+        <attr name="rfl_cornerTopLeftRadius" format="dimension" />
+        <attr name="rfl_cornerTopRightRadius" format="dimension" />
+        <attr name="rfl_cornerBottomRightRadius" format="dimension" />
+        <attr name="rfl_cornerBottomLeftRadius" format="dimension" />
+    </declare-styleable>
+</resources>

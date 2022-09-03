@@ -1,8 +1,8 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.cart
 
 import androidx.lifecycle.viewModelScope
-import com.github.clockworkclyde.basedeliverymvvm.data.OrderCartRepository
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProductItem
+import com.github.clockworkclyde.basedeliverymvvm.data.repository.OrderCartRepository
+import com.github.clockworkclyde.models.ui.cart.OrderProductItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentCartBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.model.cart.OrderProductItem
+import com.github.clockworkclyde.models.ui.cart.OrderProductItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.cart.OrderCartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

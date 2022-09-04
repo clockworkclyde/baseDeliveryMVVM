@@ -1,9 +1,8 @@
-package com.github.clockworkclyde.basedeliverymvvm.providers.database.di
+package com.github.clockworkclyde.basedeliverymvvm.di
 
 import android.app.Application
 import androidx.room.Room
-import com.github.clockworkclyde.basedeliverymvvm.providers.database.DishesDao
-import com.github.clockworkclyde.basedeliverymvvm.providers.database.OrderCartDao
+import com.github.clockworkclyde.basedeliverymvvm.providers.database.dao.DishesDao
 import com.github.clockworkclyde.basedeliverymvvm.providers.database.db.BaseDeliveryDatabase
 import dagger.Module
 import dagger.Provides
@@ -25,7 +24,7 @@ object DatabaseModule {
     @Provides
     fun provideMenuCategoriesDao(db: BaseDeliveryDatabase): DishesDao = db.deliveryDao()
 
-    @Provides
-    fun provideOrderCartDao(db: BaseDeliveryDatabase): OrderCartDao = db.orderCartDao()
+//    @Provides
+//    fun provideOrderCartDao(db: BaseDeliveryDatabase): OrderCartDao = db.orderCartDao()
 
 }

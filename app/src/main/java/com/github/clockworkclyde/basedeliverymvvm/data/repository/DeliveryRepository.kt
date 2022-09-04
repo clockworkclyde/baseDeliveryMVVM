@@ -1,17 +1,21 @@
 package com.github.clockworkclyde.basedeliverymvvm.data.repository
 
+
 import com.github.clockworkclyde.basedeliverymvvm.data.datasource.DeliveryLocalDataSourceImpl
 import com.github.clockworkclyde.basedeliverymvvm.di.FoodCategoriesData
+import com.github.clockworkclyde.models.local.cart.OrderCartPref
 import com.github.clockworkclyde.models.local.main.DishEntity
 import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
 import com.github.clockworkclyde.network.api.DeliveryRemoteDataSourceImpl
+import com.google.gson.Gson
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -24,7 +28,7 @@ class DeliveryRepository @Inject constructor(
         val flowsList = getDishesByCategories(getCategories())
         return combine(flowsList) {
             it.map { dishes ->
-                DishesCategoryItem(dishes.first().categoryId, dishes)
+                DishesCategoryItem(dishes.firstOrNull()?.categoryId, dishes)
             }
         }
     }
@@ -38,7 +42,7 @@ class DeliveryRepository @Inject constructor(
     }
 
     /** fetch fresh data from remote api and save it in database **/
-    suspend fun fetchDishes() {
+    suspend fun loadDishes() {
         coroutineScope {
             localDataSource.clearDishes()
             val categories = getCategories()
@@ -50,12 +54,28 @@ class DeliveryRepository @Inject constructor(
                         .let { list.addAll(it) }
                 }
             }.awaitAll()
+            launch { compareDishesWithOrderPrefs(list.map { it.convertTo() }) } // todo remove
             insertFetchedDishes(list.toList())
         }
     }
 
     private suspend fun insertFetchedDishes(entities: List<DishEntity>) {
         localDataSource.insertDishes(entities)
+    }
+
+    private fun compareDishesWithOrderPrefs(dishes: List<DishItem>) {
+        if (OrderCartPref.dishes.isNotEmpty()) {
+            val dishesPref = OrderCartPref.dishes
+            val gson = Gson()
+            for (str in dishesPref) {
+                val dish = gson.fromJson(str, DishItem::class.java)
+                dishes.forEach {
+                    if (dish.id == it.id && dish.title == it.title) {
+                        dishesPref.remove(str)
+                    }
+                }
+            }
+        }
     }
 
     /** find items by query or empty list using roomDatabase **/

@@ -1,7 +1,6 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -11,12 +10,12 @@ import androidx.navigation.fragment.findNavController
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentMainBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.ListMediator
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
-import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
-import com.github.clockworkclyde.models.ui.menu.DishItem
+import com.github.clockworkclyde.basedeliverymvvm.presentation.util.ListMediator
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.main.MainScreenViewModel
+import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.github.clockworkclyde.models.ui.menu.DishProgress
+import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
 import com.github.clockworkclyde.network.api.ViewState
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,8 +39,8 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
         savedInstanceState: Bundle?
     ): View {
         viewModel.errorData.addOnExceptionListener {
-//            errorViewIsVisible = true
-//            showError()
+            errorViewIsVisible = true
+            showError()
         }
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -50,7 +49,8 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        initLoadingDishes()
+
+        //viewModel.fetchLatestData()
 
         with(binding) {
             recyclerView.adapter = adapter
@@ -59,7 +59,7 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
 
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.data.collect { viewState ->
-                    val categories = when (viewState) {
+                    val categories: List<DishesCategoryItem> = when (viewState) {
                         is ViewState.Loading -> {
                             getProgressItems()
                         }
@@ -76,7 +76,7 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
                     tabLayout.setTabs(categories)
                     adapter.items = categories
                     mediator.updateWithAnchors(categories.indices.toList())
-                    if (tabLayout.tabCount > 0) mediator.attach()
+                    if (tabLayout.tabCount > 1 && viewState is ViewState.Success) mediator.attach()
                 }
             }
 
@@ -96,21 +96,11 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun TabLayout.setTabs(categories: List<DishesCategoryItem>) {
         removeAllTabs()
-        if (categories.size <= 1) {
-            isVisible = false
-            addTab(newTab().setText(""))
-        } else {
-            isVisible = true
-            for (category in categories) {
-                addTab(newTab().setText(getString(category.categoryId)))
-            }
+        isVisible = false
+        for (category in categories) {
+            addTab(newTab().setText(getString(category.categoryId ?: R.string.empty)))
         }
-    }
-
-    private fun initLoadingDishes() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.fetchLatestData()
-        }
+        if (tabCount > 1) isVisible = true
     }
 
     private fun showError() {
@@ -165,7 +155,7 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun getProgressItems(): List<DishesCategoryItem> {
         val items = IntRange(1, 10).map { DishProgress }
-        return listOf(DishesCategoryItem(0, items))
+        return listOf(DishesCategoryItem(null, items))
     }
 
     private fun getErrorItems(): List<DishesCategoryItem> {

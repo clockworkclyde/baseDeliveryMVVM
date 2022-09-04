@@ -1,6 +1,6 @@
 package com.github.clockworkclyde.basedeliverymvvm.data.datasource
 
-import com.github.clockworkclyde.basedeliverymvvm.providers.database.DishesDao
+import com.github.clockworkclyde.basedeliverymvvm.providers.database.dao.DishesDao
 import com.github.clockworkclyde.models.local.main.DishEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

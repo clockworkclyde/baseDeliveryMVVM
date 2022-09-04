@@ -8,6 +8,7 @@
     <string name="search">Search</string>
     <string name="search_hint">For example, Grill</string>
     <string name="empty_result">Empty result</string>
+    <string name="empty" />
     <string name="total_price">Create order for $$$</string>
     <string name="toast_error">Error. Please retry</string>
     <string name="wrong">Something was going wrong</string>

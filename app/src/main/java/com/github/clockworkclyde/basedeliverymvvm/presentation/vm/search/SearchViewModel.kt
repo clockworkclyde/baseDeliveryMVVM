@@ -2,9 +2,10 @@ package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.search
 
 import androidx.lifecycle.viewModelScope
 import com.github.clockworkclyde.basedeliverymvvm.data.repository.DeliveryRepository
-import com.github.clockworkclyde.basedeliverymvvm.data.repository.OrderCartRepository
-import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
+import com.github.clockworkclyde.models.local.cart.OrderCartPref
+import com.github.clockworkclyde.models.ui.menu.DishItem
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val deliveryRepository: DeliveryRepository,
-    private val orderRepository: OrderCartRepository
+    private val deliveryRepository: DeliveryRepository
 ) : BaseViewModel() {
 
     private val _searchQuery = MutableStateFlow<String?>(null)
@@ -31,6 +31,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun addToOrderCart(item: DishItem) {
-        viewModelScope.launch { orderRepository.addToOrderCart(item) }
+        val json = Gson().toJson(item)
+        OrderCartPref.dishes.add(json)
     }
 }

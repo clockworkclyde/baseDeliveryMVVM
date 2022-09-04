@@ -58,8 +58,9 @@ dependencies {
     implementation libs.room
     implementation libs.roomKtx
     kapt libs.roomCompiler
-    implementation libs.shimmer
     implementation libs.lifecycleRuntime
+    implementation libs.kotPref
+    implementation libs.kotPrefLivedata
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

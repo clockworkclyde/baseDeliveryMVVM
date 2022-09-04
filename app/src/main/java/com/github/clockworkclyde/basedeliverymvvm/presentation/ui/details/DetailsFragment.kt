@@ -38,18 +38,18 @@ class DetailsFragment : BaseDialogFragment() {
         with(binding) {
             val screenSize = getScreenSize(requireContext())
             val item = args.dishItem
-            val radius = resources.getDimensionPixelOffset(R.dimen.card_radius).toFloat()
+            val radius = resources.getDimensionPixelOffset(R.dimen.card_radius)
             glide.load(item.image)
                 .override(screenSize.x, (screenSize.y * 9f / 16).toInt())
                 .transform(
                     CenterCrop(),
-                    RoundedCorners(10)
+                    RoundedCorners(radius)
                 )
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
 
             titleTextView.text = item.title
-            button.text = item.price.toString()
+            button.text = "Add to order for ${item.price} p."
             button.onSingleClick { provideOrderCartClick(item) }
         }
     }

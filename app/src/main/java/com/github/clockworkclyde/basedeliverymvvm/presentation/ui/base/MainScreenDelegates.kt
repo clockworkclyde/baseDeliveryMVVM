@@ -1,6 +1,7 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base
 
 import android.app.Activity
+import android.view.animation.AnimationUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -86,8 +87,9 @@ object MainScreenDelegates {
                 ItemMenuProgressBinding.inflate(inflater, container, false)
             }
         ) {
+            val anim = AnimationUtils.loadAnimation(context, R.anim.anim_loading_shim)
             bind {
-                binding.shimmerContainer.startShimmer()
+                binding.root.startAnimation(anim)
             }
         }
 

@@ -1,6 +1,7 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,10 @@ import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.MainActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.sample
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.net.UnknownHostException
 
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
@@ -24,11 +27,22 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     fun <T : Throwable> Flow<T>.addOnExceptionListener(block: () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                collect { block.invoke() }
-            }
+            collect { block.invoke() }
         }
     }
+
+//    fun <T> Flow<T>.handleErrorData(block: () -> Unit): Flow<T> {
+//        return flow {
+//            try {
+//                collect { value ->
+//                    emit(value)
+//                }
+//            } catch (e: Exception) {
+//                block.invoke()
+////                throw e
+//            }
+//        }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

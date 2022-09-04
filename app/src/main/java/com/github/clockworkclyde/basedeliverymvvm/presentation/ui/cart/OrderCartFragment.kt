@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,8 @@ import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentCartBindin
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.models.ui.cart.OrderProductItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.cart.OrderCartViewModel
+import com.github.clockworkclyde.models.ui.menu.DishItem
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,11 +39,9 @@ class OrderCartFragment : BaseFragment(R.layout.fragment_cart) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             recyclerView.adapter = adapter
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                viewModel.data.collect {
-                    adapter.items = it
-                    calculateTotalPrice(it)
-                }
+            viewModel.orderDishes.observe(viewLifecycleOwner) { valuesSet ->
+                adapter.items = valuesSet.map { Gson().fromJson(it, DishItem::class.java) } // todo move
+                //calculateTotalPrice()
             }
         }
     }
@@ -56,6 +57,7 @@ class OrderCartFragment : BaseFragment(R.layout.fragment_cart) {
     }
 
     private fun onQuantityButtonClick(id: Long, diff: Int) {
-        viewModel.changeItemQuantity(id, diff)
+        Toast.makeText(requireContext(), "Quantity for ($id) is changed", Toast.LENGTH_SHORT).show()
+        //viewModel.changeItemQuantity(id, diff)
     }
 }

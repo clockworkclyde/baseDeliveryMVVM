@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="motion_duration_large">300</integer>
+    <integer name="shim_duration_large">700</integer>
 </resources>

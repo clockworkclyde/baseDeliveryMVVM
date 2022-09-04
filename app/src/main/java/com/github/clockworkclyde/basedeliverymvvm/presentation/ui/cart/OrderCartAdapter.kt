@@ -10,6 +10,7 @@ import com.github.clockworkclyde.models.ui.base.ListItem
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.BaseDiffUtilCallback
 import com.github.clockworkclyde.models.ui.cart.OrderProductItem
+import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
@@ -22,7 +23,7 @@ class OrderCartAdapter(onButtonClickListener: (Long, Int) -> Unit) :
 
     companion object {
         fun orderAdapterDelegate(onButtonClickListener: (Long, Int) -> Unit) =
-            adapterDelegateViewBinding<OrderProductItem, ListItem, ItemCartBinding>(
+            adapterDelegateViewBinding<DishItem, ListItem, ItemCartBinding>(
                 { inflater, container ->
                     ItemCartBinding.inflate(inflater, container, false)
                 }
@@ -47,20 +48,20 @@ class OrderCartAdapter(onButtonClickListener: (Long, Int) -> Unit) :
                             .transition(DrawableTransitionOptions.withCrossFade())
                             .into(imageView)
 
-                        val quantity = item.quantity
-                        counterTextView.text = quantity.toString()
-                        lessButton.setOnClickListener {
-                            onButtonClickListener.invoke(
-                                item.id,
-                                quantity - 1
-                            )
-                        }
-                        moreButton.setOnClickListener {
-                            onButtonClickListener.invoke(
-                                item.id,
-                                quantity + 1
-                            )
-                        }
+//                        val quantity = item.quantity
+//                        counterTextView.text = quantity.toString()
+//                        lessButton.setOnClickListener {
+//                            onButtonClickListener.invoke(
+//                                item.id,
+//                                quantity - 1
+//                            )
+//                        }
+//                        moreButton.setOnClickListener {
+//                            onButtonClickListener.invoke(
+//                                item.id,
+//                                quantity + 1
+//                            )
+//                        }
                     }
                 }
             }

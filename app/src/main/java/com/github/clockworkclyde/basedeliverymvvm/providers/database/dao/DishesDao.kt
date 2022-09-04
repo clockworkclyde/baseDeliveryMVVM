@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.basedeliverymvvm.providers.database
+package com.github.clockworkclyde.basedeliverymvvm.providers.database.dao
 
 import androidx.room.*
 import com.github.clockworkclyde.models.local.main.DishEntity

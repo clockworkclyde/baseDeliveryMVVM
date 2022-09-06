@@ -25,9 +25,9 @@ class MainScreenViewModel @Inject constructor(
     private val _data = MutableStateFlow<ViewState<List<DishesCategoryItem>>>(ViewState.Loading)
     val data: StateFlow<ViewState<List<DishesCategoryItem>>> get() = _data
 
-    init {
-        fetchLatestData()
-    }
+//    init {
+//        fetchLatestData()
+//    }
 
     fun fetchLatestData() {
         viewModelScope.launch(Dispatchers.IO + errorHandler) {

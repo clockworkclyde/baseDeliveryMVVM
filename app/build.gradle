@@ -44,6 +44,9 @@ dependencies {
     implementation project(':models')
 
     implementation libs.timber
+    implementation libs.daggerHilt
+    kapt libs.daggerHiltKapt
+
     implementation libs.coreKtx
     implementation libs.appcompat
     implementation libs.material
@@ -51,8 +54,6 @@ dependencies {
     implementation libs.glide
     implementation libs.adapterDelegates
     implementation libs.adapterDelegatesViewBinding
-    implementation libs.daggerHilt
-    kapt libs.daggerHiltKapt
     implementation libs.navigationUiFragmentKtx
     implementation libs.navigationUiKtx
     implementation libs.room
@@ -61,6 +62,7 @@ dependencies {
     implementation libs.lifecycleRuntime
     implementation libs.kotPref
     implementation libs.kotPrefLivedata
+    implementation libs.firebaseAuth
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -36,6 +36,18 @@ object MainScreenDelegates {
             }
         }
 
+    fun menuItemsProgressAdapterDelegate() =
+        adapterDelegateViewBinding<DishProgress, ListItem, ItemMenuProgressBinding>(
+            { inflater, container ->
+                ItemMenuProgressBinding.inflate(inflater, container, false)
+            }
+        ) {
+            val anim = AnimationUtils.loadAnimation(context, R.anim.anim_loading_shim)
+            bind {
+                binding.root.startAnimation(anim)
+            }
+        }
+
     fun menuItemsAdapterDelegate(
         onItemClickListener: (DishItem, ClickAction) -> Unit
     ) =
@@ -47,6 +59,7 @@ object MainScreenDelegates {
             bind {
                 val resources = binding.root.resources
                 binding.apply {
+
                     Glide.with(root) // todo base-util
                         .load(item.image)
                         .override(
@@ -80,17 +93,4 @@ object MainScreenDelegates {
                 }
             }
         }
-
-    fun menuItemsProgressAdapterDelegate() =
-        adapterDelegateViewBinding<DishProgress, ListItem, ItemMenuProgressBinding>(
-            { inflater, container ->
-                ItemMenuProgressBinding.inflate(inflater, container, false)
-            }
-        ) {
-            val anim = AnimationUtils.loadAnimation(context, R.anim.anim_loading_shim)
-            bind {
-                binding.root.startAnimation(anim)
-            }
-        }
-
 }

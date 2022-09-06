@@ -10,13 +10,10 @@ import timber.log.Timber
 
 abstract class BaseViewModel : ViewModel() {
 
-    private val TAG = this.javaClass.simpleName
-
     val errorData = MutableSharedFlow<Throwable>()
 
     protected open val errorHandler = CoroutineExceptionHandler { _, throwable ->
-        //Timber.e(throwable)
-        Log.e(TAG, throwable.stackTraceToString())
+        Timber.e(throwable)
         viewModelScope.launch { errorData.emit(throwable) }
     }
 }

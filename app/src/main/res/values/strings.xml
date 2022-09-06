@@ -15,6 +15,11 @@
     <string name="retry">Retry</string>
     <string name="details">Details</string>
     <string name="burger">burger</string>
+    <string name="enter_your_account">Enter your account with</string>
+    <string name="phone_number_ru">+ 7</string>
+    <string name="not_logged">You are not logged yet</string>
+    <string name="log_in_by_phone_number">Log in by phone number</string>
+    <string name="agree_personal_data">You agree to collect and processing your personal data by submitting the form above.</string>
     <string-array name="categories">
         <item>@string/pizza</item>
         <item>@string/sushi</item>

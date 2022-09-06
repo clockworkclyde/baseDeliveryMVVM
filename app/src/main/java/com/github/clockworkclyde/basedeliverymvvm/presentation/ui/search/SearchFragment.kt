@@ -27,7 +27,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModels()
 
-    private val adapter by lazy { MainScreenAdapter(::onItemClick) }
+    private val adapter by lazy { SearchAdapter(::onItemClick) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,8 +65,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                     }
                 }
         }
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

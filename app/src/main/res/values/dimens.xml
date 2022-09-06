@@ -6,5 +6,6 @@
     <dimen name="menu_item_width">312px</dimen>
     <dimen name="menu_item_height">231px</dimen>
     <dimen name="main_activity_bar_elevation">0f</dimen>
+    <dimen name="phone_start_padding">8dp</dimen>
 
 </resources>

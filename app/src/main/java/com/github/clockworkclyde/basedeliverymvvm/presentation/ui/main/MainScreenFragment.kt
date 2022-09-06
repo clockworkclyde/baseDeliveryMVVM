@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -42,6 +43,9 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
             errorViewIsVisible = true
             showError()
         }
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.fetchLatestData()
+        }
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,34 +54,34 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        //viewModel.fetchLatestData()
-
         with(binding) {
             recyclerView.adapter = adapter
             recyclerView.setHasFixedSize(true)
             val mediator = ListMediator(recyclerView, tabLayout)
 
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.data.collect { viewState ->
-                    val categories: List<DishesCategoryItem> = when (viewState) {
-                        is ViewState.Loading -> {
-                            getProgressItems()
+                viewModel.data
+                    .onEach { mediator.detach() }
+                    .collect { viewState ->
+                        val categories: List<DishesCategoryItem> = when (viewState) {
+                            is ViewState.Loading -> {
+                                getProgressItems()
+                            }
+                            is ViewState.Success -> {
+                                viewState.data
+                            }
+                            is ViewState.Empty -> {
+                                getEmptyItems()
+                            }
+                            is ViewState.Error -> {
+                                getErrorItems()
+                            }
                         }
-                        is ViewState.Success -> {
-                            viewState.data
-                        }
-                        is ViewState.Empty -> {
-                            getEmptyItems()
-                        }
-                        is ViewState.Error -> {
-                            getErrorItems()
-                        }
+                        tabLayout.setTabs(categories)
+                        adapter.items = categories
+                        mediator.updateWithAnchors(categories.indices.toList())
+                        if (viewState !is ViewState.Empty && tabLayout.tabCount == categories.count()) mediator.attach()
                     }
-                    tabLayout.setTabs(categories)
-                    adapter.items = categories
-                    mediator.updateWithAnchors(categories.indices.toList())
-                    if (tabLayout.tabCount > 1 && viewState is ViewState.Success) mediator.attach()
-                }
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -149,7 +153,7 @@ class MainScreenFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun getEmptyItems(): List<DishesCategoryItem> {
-        Toast.makeText(requireContext(), "Its empty", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Request error with empty result", Toast.LENGTH_SHORT).show()
         return emptyList()
     }
 

@@ -54,7 +54,7 @@ class DeliveryRepository @Inject constructor(
                         .let { list.addAll(it) }
                 }
             }.awaitAll()
-            launch { compareDishesWithOrderPrefs(list.map { it.convertTo() }) } // todo remove
+            compareDishesWithOrderPrefs(list.map { it.convertTo() }) // todo remove
             insertFetchedDishes(list.toList())
         }
     }
@@ -69,11 +69,7 @@ class DeliveryRepository @Inject constructor(
             val gson = Gson()
             for (str in dishesPref) {
                 val dish = gson.fromJson(str, DishItem::class.java)
-                dishes.forEach {
-                    if (dish.id == it.id && dish.title == it.title) {
-                        dishesPref.remove(str)
-                    }
-                }
+                if (!dishes.contains(dish)) dishesPref.remove(str)
             }
         }
     }

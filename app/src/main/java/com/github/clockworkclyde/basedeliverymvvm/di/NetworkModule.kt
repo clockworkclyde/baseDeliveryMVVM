@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.network.api.di
+package com.github.clockworkclyde.basedeliverymvvm.di
 
 import dagger.Module
 import dagger.Provides

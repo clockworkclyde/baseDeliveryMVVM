@@ -11,7 +11,7 @@ class SearchAdapter(onItemClickListener: (DishItem, MainScreenDelegates.ClickAct
 
     init {
         delegatesManager.addDelegate(
-            MainScreenDelegates.menuItemsAdapterDelegate(
+            MainScreenDelegates.dishesAdapterDelegate(
                 onItemClickListener
             )
         )

@@ -12,11 +12,10 @@ import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentMainBindin
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.ListMediator
-import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.main.MainScreenViewModel
+import com.github.clockworkclyde.models.ui.base.ViewState
 import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.github.clockworkclyde.models.ui.menu.DishProgress
 import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
-import com.github.clockworkclyde.network.api.ViewState
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

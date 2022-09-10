@@ -1,6 +1,5 @@
-package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base
+package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler

@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.models.local.main
+package com.github.clockworkclyde.models.local.dishes
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

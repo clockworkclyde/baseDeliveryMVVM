@@ -1,7 +1,10 @@
 package com.github.clockworkclyde.basedeliverymvvm.providers.database.dao
 
-import androidx.room.*
-import com.github.clockworkclyde.models.local.main.DishEntity
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.github.clockworkclyde.models.local.dishes.DishEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

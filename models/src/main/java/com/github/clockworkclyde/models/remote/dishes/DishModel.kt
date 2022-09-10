@@ -1,6 +1,6 @@
-package com.github.clockworkclyde.models.remote.main
+package com.github.clockworkclyde.models.remote.dishes
 
-import com.github.clockworkclyde.models.local.main.DishEntity
+import com.github.clockworkclyde.models.local.dishes.DishEntity
 import com.github.clockworkclyde.models.mappers.IConvertableToWithParams
 import com.google.gson.annotations.SerializedName
 

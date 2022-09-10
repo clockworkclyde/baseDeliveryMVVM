@@ -28,6 +28,9 @@ inline fun EditText.doOnQueryTextChanged(crossinline listener: (String) -> Unit)
     }
 }
 
+fun EditText.getTextWithoutDashesAndSpaces(): String {
+    return text.toString().replace(" ", "").replace("-", "")
+}
 
 inline fun <V : View> V.onSingleClick(
     throttleDuration: Long = DEFAULT_THROTTLE_DURATION_MS,

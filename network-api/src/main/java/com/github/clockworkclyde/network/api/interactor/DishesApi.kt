@@ -1,12 +1,12 @@
 package com.github.clockworkclyde.network.api.interactor
 
+import com.github.clockworkclyde.models.remote.dishes.CategoryModel
 import com.github.clockworkclyde.network.api.BuildConfig
-import com.github.clockworkclyde.models.remote.main.CategoryModel
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
-interface FoodApi {
+interface DishesApi {
 
     companion object {
         const val apiKey = BuildConfig.API_KEY

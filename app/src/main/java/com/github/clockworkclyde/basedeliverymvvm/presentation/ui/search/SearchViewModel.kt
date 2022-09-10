@@ -1,8 +1,8 @@
-package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.search
+package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.search
 
 import androidx.lifecycle.viewModelScope
 import com.github.clockworkclyde.basedeliverymvvm.data.repository.DeliveryRepository
-import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseViewModel
 import com.github.clockworkclyde.models.local.cart.OrderCartPref
 import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.google.gson.Gson

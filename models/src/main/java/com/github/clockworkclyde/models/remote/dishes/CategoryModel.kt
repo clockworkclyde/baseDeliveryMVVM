@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.models.remote.main
+package com.github.clockworkclyde.models.remote.dishes
 
 import com.google.gson.annotations.SerializedName
 

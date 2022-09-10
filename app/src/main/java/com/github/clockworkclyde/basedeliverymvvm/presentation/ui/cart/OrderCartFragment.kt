@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentCartBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.models.ui.cart.OrderProductItem
-import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.cart.OrderCartViewModel
 import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint

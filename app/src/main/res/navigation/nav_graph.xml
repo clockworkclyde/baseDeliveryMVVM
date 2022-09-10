@@ -19,6 +19,9 @@
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.search.SearchFragment"
         android:label="@string/search"
         tools:layout="@layout/fragment_search" />
+    <action
+        android:id="@+id/action_to_detailsFragment"
+        app:destination="@id/detailsFragment" />
     <dialog
         android:id="@+id/detailsFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.details.DetailsFragment"
@@ -32,12 +35,45 @@
         android:id="@+id/orderCartFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.cart.OrderCartFragment"
         android:label="@string/cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart">
+        <action
+            app:launchSingleTop="true"
+            android:id="@+id/action_orderCartFragment_to_enterPhoneFragment"
+            app:destination="@id/enterPhoneFragment" />
+    </fragment>
 
-    <action
-        android:id="@+id/action_to_detailsFragment"
-        app:destination="@id/detailsFragment" />
-    <action
-        android:id="@+id/action_to_orderCartFragment"
-        app:destination="@id/orderCartFragment" />
+    <fragment
+        android:id="@+id/enterPhoneFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.auth.EnterPhoneFragment"
+        android:label="@string/enter_phone"
+        tools:layout="@layout/fragment_enter_phone">
+        <action
+            android:id="@+id/action_userSignInFragment_to_userVerificationFragment"
+            app:destination="@id/confirmPhoneFragment" />
+        <argument
+            android:name="stringRes"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmPhoneFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.auth.ConfirmPhoneFragment"
+        android:label="@string/confirm_phone"
+        tools:layout="@layout/fragment_confirm_phone">
+
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.profile.ProfileFragment"
+        android:label="@string/user_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_enterPhoneFragment"
+            app:destination="@id/enterPhoneFragment" />
+    </fragment>
 </navigation>

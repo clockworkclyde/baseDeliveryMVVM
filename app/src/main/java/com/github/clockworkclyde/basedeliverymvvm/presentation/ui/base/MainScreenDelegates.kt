@@ -10,12 +10,12 @@ import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemCategoryBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuBinding
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemMenuProgressBinding
-import com.github.clockworkclyde.models.ui.base.ListItem
-import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
-import com.github.clockworkclyde.models.ui.menu.DishItem
-import com.github.clockworkclyde.models.ui.menu.DishProgress
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.CategoryAdapter
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
+import com.github.clockworkclyde.models.ui.base.ListItem
+import com.github.clockworkclyde.models.ui.menu.DishItem
+import com.github.clockworkclyde.models.ui.menu.DishProgress
+import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
 object MainScreenDelegates {
@@ -36,7 +36,7 @@ object MainScreenDelegates {
             }
         }
 
-    fun menuItemsProgressAdapterDelegate() =
+    fun dishesProgressAdapterDelegate() =
         adapterDelegateViewBinding<DishProgress, ListItem, ItemMenuProgressBinding>(
             { inflater, container ->
                 ItemMenuProgressBinding.inflate(inflater, container, false)
@@ -48,7 +48,7 @@ object MainScreenDelegates {
             }
         }
 
-    fun menuItemsAdapterDelegate(
+    fun dishesAdapterDelegate(
         onItemClickListener: (DishItem, ClickAction) -> Unit
     ) =
         adapterDelegateViewBinding<DishItem, ListItem, ItemMenuBinding>(

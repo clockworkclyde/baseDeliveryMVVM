@@ -7,4 +7,7 @@
         <attr name="rfl_cornerBottomRightRadius" format="dimension" />
         <attr name="rfl_cornerBottomLeftRadius" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="PrefixEditText">
+
+    </declare-styleable>
 </resources>

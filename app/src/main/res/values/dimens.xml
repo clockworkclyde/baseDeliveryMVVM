@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <dimen name="product_price">399</dimen>
     <dimen name="card_radius">10dp</dimen>
     <dimen name="menu_item_width">312px</dimen>
     <dimen name="menu_item_height">231px</dimen>
     <dimen name="main_activity_bar_elevation">0f</dimen>
     <dimen name="phone_start_padding">8dp</dimen>
-
+    <dimen name="phone_field_text_size">21sp</dimen>
 </resources>

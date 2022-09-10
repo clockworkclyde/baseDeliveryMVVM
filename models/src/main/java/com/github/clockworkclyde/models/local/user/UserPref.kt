@@ -5,5 +5,6 @@ import com.chibatching.kotpref.KotprefModel
 object UserPref : KotprefModel() {
     var uid by stringPref()
     var username by stringPref()
-    var isAuth by booleanPref(default = false)
 }
+
+data class User(val uid: String, val name: String)

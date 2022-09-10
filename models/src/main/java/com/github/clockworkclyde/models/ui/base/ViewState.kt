@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.network.api
+package com.github.clockworkclyde.models.ui.base
 
 sealed class ViewState<out T> {
     object Loading : ViewState<Nothing>()

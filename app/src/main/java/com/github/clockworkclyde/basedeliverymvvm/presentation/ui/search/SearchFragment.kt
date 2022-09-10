@@ -11,9 +11,7 @@ import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentSearchBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.MainScreenDelegates
-import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScreenAdapter
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.doOnQueryTextChanged
-import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.search.SearchViewModel
 import com.github.clockworkclyde.models.ui.menu.DishItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -22,7 +20,7 @@ import kotlinx.coroutines.flow.map
 @AndroidEntryPoint
 class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
-    override var bottomNavigationViewVisibility: Int = View.INVISIBLE
+    override var bottomNavigationViewVisibility: Int = View.GONE
 
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModels()

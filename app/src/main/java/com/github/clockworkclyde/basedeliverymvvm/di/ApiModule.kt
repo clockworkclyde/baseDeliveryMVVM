@@ -1,7 +1,7 @@
-package com.github.clockworkclyde.network.api.di
+package com.github.clockworkclyde.basedeliverymvvm.di
 
 import com.github.clockworkclyde.network.api.BuildConfig
-import com.github.clockworkclyde.network.api.interactor.FoodApi
+import com.github.clockworkclyde.network.api.interactor.DishesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,6 +47,6 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideFoodApi(retrofit: Retrofit): FoodApi = retrofit.create(FoodApi::class.java)
+    fun provideFoodApi(retrofit: Retrofit): DishesApi = retrofit.create(DishesApi::class.java)
 
 }

@@ -48,14 +48,20 @@ ext.libs = [
         roomCompiler               : "androidx.room:room-compiler:$versions.room",
 
         // Lifecycle
-        lifecycleViewModel         : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle",
         lifecycleRuntime           : "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle",
-        lifecycleCompiler          : "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle",
+        liveData                   : "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0",
 
         // Kotlin delegate shared preferences
         kotPref                    : "com.chibatching.kotpref:kotpref:$versions.kotPref",
         kotPrefLivedata            : "com.chibatching.kotpref:livedata-support:$versions.kotPref",
 
         // Firebase
-        firebaseAuth: "com.google.firebase:firebase-auth-ktx:21.0.8"
+        firebaseAuth               : "com.google.firebase:firebase-auth-ktx:21.0.8",
+        /* coroutines support for firebase operations */
+        firebaseCoroutines         : 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1',
+
+        // Country code picker
+        ccp                        : "com.hbb20:ccp:2.6.1"
+
+
 ]

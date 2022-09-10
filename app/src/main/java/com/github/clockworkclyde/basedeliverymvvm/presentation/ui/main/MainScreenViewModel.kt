@@ -1,12 +1,12 @@
-package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.main
+package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main
 
 import androidx.lifecycle.viewModelScope
 import com.github.clockworkclyde.basedeliverymvvm.data.repository.DeliveryRepository
-import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseViewModel
 import com.github.clockworkclyde.models.local.cart.OrderCartPref
+import com.github.clockworkclyde.models.ui.base.ViewState
 import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
-import com.github.clockworkclyde.network.api.ViewState
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,10 +25,6 @@ class MainScreenViewModel @Inject constructor(
     private val _data = MutableStateFlow<ViewState<List<DishesCategoryItem>>>(ViewState.Loading)
     val data: StateFlow<ViewState<List<DishesCategoryItem>>> get() = _data
 
-//    init {
-//        fetchLatestData()
-//    }
-
     fun fetchLatestData() {
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
             deliveryRepository.getDishes()
@@ -38,7 +34,9 @@ class MainScreenViewModel @Inject constructor(
                     if (it.isNotEmpty() && it.all { cat -> cat.categoryId != null }) {
                         _data.value = ViewState.Success(it)
                     } else {
-                        _data.value = ViewState.Empty
+                        if (data.value !is ViewState.Success) {
+                            _data.value = ViewState.Empty
+                        }
                     }
                 }
         }

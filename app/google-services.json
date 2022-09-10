@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "425630987914",
+    "project_id": "basedelivery-22",
+    "storage_bucket": "basedelivery-22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425630987914:android:f1d45b8cdc95353ad2df73",
+        "android_client_info": {
+          "package_name": "com.github.clockworkclyde.basedeliverymvvm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425630987914-u589pde6pcjg76tmga172m1o1dgbhfi7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.clockworkclyde.basedeliverymvvm",
+            "certificate_hash": "aaf627eb43a33fec6ee54000eea28ecf2933e477"
+          }
+        },
+        {
+          "client_id": "425630987914-nbf0f8e451i0ae85p7daah8qbigjvd9d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxvM3_vAIOsTg1Fur2NKqQdGMkYTd_Aak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425630987914-nbf0f8e451i0ae85p7daah8qbigjvd9d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

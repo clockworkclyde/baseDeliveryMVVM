@@ -4,7 +4,7 @@ package com.github.clockworkclyde.basedeliverymvvm.data.repository
 import com.github.clockworkclyde.basedeliverymvvm.data.datasource.DeliveryLocalDataSourceImpl
 import com.github.clockworkclyde.basedeliverymvvm.di.FoodCategoriesData
 import com.github.clockworkclyde.models.local.cart.OrderCartPref
-import com.github.clockworkclyde.models.local.main.DishEntity
+import com.github.clockworkclyde.models.local.dishes.DishEntity
 import com.github.clockworkclyde.models.ui.menu.DishItem
 import com.github.clockworkclyde.models.ui.menu.DishesCategoryItem
 import com.github.clockworkclyde.network.api.DeliveryRemoteDataSourceImpl
@@ -54,7 +54,7 @@ class DeliveryRepository @Inject constructor(
                         .let { list.addAll(it) }
                 }
             }.awaitAll()
-            compareDishesWithOrderPrefs(list.map { it.convertTo() }) // todo remove
+            launch { compareDishesWithOrderPrefs(list.map { it.convertTo() }) } // todo remove
             insertFetchedDishes(list.toList())
         }
     }

@@ -1,18 +1,10 @@
-package com.github.clockworkclyde.basedeliverymvvm.presentation.vm.cart
+package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.cart
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.chibatching.kotpref.livedata.asLiveData
-import com.github.clockworkclyde.basedeliverymvvm.presentation.vm.base.BaseViewModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseViewModel
 import com.github.clockworkclyde.models.local.cart.OrderCartPref
-import com.github.clockworkclyde.models.ui.cart.OrderProductItem
-import com.github.clockworkclyde.models.ui.menu.DishItem
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

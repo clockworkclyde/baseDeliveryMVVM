@@ -14,8 +14,11 @@ import com.github.clockworkclyde.basedeliverymvvm.data.repository.Response
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentConfirmPhoneBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.doOnQueryTextChanged
+import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
+import com.github.clockworkclyde.models.local.auth.TimeCounterPref
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
@@ -38,11 +41,7 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel.millisUntilFinished.observe(viewLifecycleOwner) { millis ->
-                val text =
-                    getString(R.string.time_until_resend_text).format((millis % 100).toString())
-                secondsUntilFinishedTextView.text = text
-            }
+            button.isEnabled = false
             editText.doOnQueryTextChanged { code ->
                 if (code.length == 6) {
                     val credential =
@@ -50,10 +49,6 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
                     viewModel.signInWithCredential(credential)
                 }
             }
-        }
-
-        viewModel.retryButtonIsAvailable.observe(viewLifecycleOwner) { isAvailable ->
-            binding.button.isEnabled = isAvailable
         }
 
         viewModel.signInState.observe(viewLifecycleOwner) { state ->
@@ -65,6 +60,40 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
                     navigateToInitializerFragment()
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val diff = (Calendar.getInstance().timeInMillis - TimeCounterPref.millis)
+        if (diff < DEFAULT_TIMEOUT_MS) {
+            observeTimeCounterUntilShowRetryButton(DEFAULT_TIMEOUT_MS - diff)
+        } else showRetryButton()
+    }
+
+    private fun observeTimeCounterUntilShowRetryButton(
+        millisInFuture: Long,
+        interval: Long = DEFAULT_INTERVAL_MS
+    ) {
+        viewModel.countDownTimer(millisInFuture, interval)
+            .observe(viewLifecycleOwner) { millisUntilFinished ->
+                if (millisUntilFinished <= 0) {
+                    showRetryButton()
+                    return@observe
+                }
+                val str = millisUntilFinished.toString()
+                binding.secondsUntilFinishedTextView.text =
+                    getString(R.string.time_until_resend_text).format(
+                        str.substring(0, str.length - 3)
+                    )
+            }
+    }
+
+    private fun showRetryButton() {
+        binding.secondsUntilFinishedTextView.text = ""
+        binding.button.run {
+            isEnabled = true
+            onSingleClick { Toast.makeText(requireContext(), "Retry!", Toast.LENGTH_SHORT).show() }
         }
     }
 
@@ -81,5 +110,10 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
             .setPopUpTo(args.destinationId, true)
             .build()
         findNavController().navigate(args.destinationId, null, navOptions)
+    }
+
+    companion object {
+        private const val DEFAULT_TIMEOUT_MS = 60000L
+        private const val DEFAULT_INTERVAL_MS = 1000L
     }
 }

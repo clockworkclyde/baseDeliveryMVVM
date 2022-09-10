@@ -1,6 +1,6 @@
 package com.github.clockworkclyde.basedeliverymvvm.data.repository
 
-import com.github.clockworkclyde.models.local.user.User
+import com.github.clockworkclyde.models.local.auth.User
 import com.github.clockworkclyde.models.remote.auth.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

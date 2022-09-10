@@ -7,11 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.github.clockworkclyde.basedeliverymvvm.data.repository.AuthRepository
 import com.github.clockworkclyde.basedeliverymvvm.data.repository.Response
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseViewModel
-import com.github.clockworkclyde.models.local.user.User
-import com.github.clockworkclyde.models.local.user.UserPref
+import com.github.clockworkclyde.models.local.auth.User
+import com.github.clockworkclyde.models.local.auth.UserPref
 import com.google.firebase.auth.PhoneAuthCredential
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,12 +29,6 @@ class AuthViewModel @Inject constructor(
 
     private val _signInState = MutableLiveData<Response<User>>()
     val signInState: LiveData<Response<User>> get() = _signInState
-
-    private val _retryButtonIsAvailable = MutableLiveData(false)
-    val retryButtonIsAvailable: LiveData<Boolean> get() = _retryButtonIsAvailable
-
-    private val _millisUntilFinished = MutableLiveData<Long>()
-    val millisUntilFinished: LiveData<Long> get() = _millisUntilFinished
 
     fun signInWithCredential(credential: PhoneAuthCredential) {
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
@@ -67,5 +62,14 @@ class AuthViewModel @Inject constructor(
     fun clearVerificationData() {
         _verificationId.value = ""
         _phoneNumber.value = ""
+    }
+
+    fun countDownTimer(millisInFuture: Long, interval: Long) = liveData {
+        var time = millisInFuture
+        while (millisInFuture > 0) {
+            time -= interval
+            emit(time)
+            delay(interval)
+        }
     }
 }

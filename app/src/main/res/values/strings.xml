@@ -28,7 +28,7 @@
     <string name="enter_phone">Enter your phone</string>
     <string name="confirm_phone">confirm phone via sms</string>
     <string name="resend_sms_btn">Resend</string>
-    <string name="time_until_resend_text">You can send code again in %1$s</string>
+    <string name="time_until_resend_text">You can resend code in %1$s sec</string>
     <string-array name="categories">
         <item>@string/pizza</item>
         <item>@string/sushi</item>

@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.models.local.user
+package com.github.clockworkclyde.models.local.auth
 
 import com.chibatching.kotpref.KotprefModel
 

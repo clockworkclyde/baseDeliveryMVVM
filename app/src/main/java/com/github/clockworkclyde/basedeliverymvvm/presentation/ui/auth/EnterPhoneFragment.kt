@@ -17,6 +17,7 @@ import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getFocusAndS
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getTextWithoutDashesAndSpaces
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.matchesNumbersOnly
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
+import com.github.clockworkclyde.models.local.auth.TimeCounterPref
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.PhoneAuthCredential
@@ -26,6 +27,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
@@ -117,6 +119,7 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
             super.onCodeSent(id, token)
             viewModel.setPhone(phone)
             viewModel.setVerificationId(id)
+            TimeCounterPref.millis = Calendar.getInstance().timeInMillis
             navigateToConfirmPhoneFragment()
         }
     }

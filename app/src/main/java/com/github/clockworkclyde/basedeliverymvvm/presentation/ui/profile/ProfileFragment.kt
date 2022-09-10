@@ -52,6 +52,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             onSingleClick {
                 viewModel.signOut().observe(viewLifecycleOwner) { isSuccessfully ->
                     if (isSuccessfully) {
+                        viewModel.clearVerificationData()
                         isVisible = false
                         initSignInButton()
                     }
@@ -60,10 +61,12 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
     }
 
-    private fun navigateToSignInFragment() =
-        findNavController().navigate(
+    private fun navigateToSignInFragment() {
+        val navController = findNavController()
+        navController.navigate(
             ProfileFragmentDirections.actionProfileFragmentToEnterPhoneFragment(
-                R.string.login_for_profile
+                R.string.login_for_profile, navController.currentDestination!!.id
             )
         )
+    }
 }

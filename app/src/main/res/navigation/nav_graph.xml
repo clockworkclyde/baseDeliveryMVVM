@@ -37,7 +37,6 @@
         android:label="@string/cart"
         tools:layout="@layout/fragment_cart">
         <action
-            app:launchSingleTop="true"
             android:id="@+id/action_orderCartFragment_to_enterPhoneFragment"
             app:destination="@id/enterPhoneFragment" />
     </fragment>
@@ -53,24 +52,23 @@
         <argument
             android:name="stringRes"
             app:argType="integer" />
+        <argument
+            android:name="destinationId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/confirmPhoneFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.auth.ConfirmPhoneFragment"
         android:label="@string/confirm_phone"
         tools:layout="@layout/fragment_confirm_phone">
-
         <argument
-            android:name="phone"
-            app:argType="string" />
-        <argument
-            android:name="id"
-            app:argType="string" />
+            android:name="destinationId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.profile.ProfileFragment"
-        android:label="@string/user_profile"
+        android:label="@string/profile_screen"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_enterPhoneFragment"

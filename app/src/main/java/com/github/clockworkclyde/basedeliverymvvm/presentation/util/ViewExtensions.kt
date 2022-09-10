@@ -1,11 +1,20 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.util
 
+import android.app.Activity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.SearchView
 import androidx.core.widget.doOnTextChanged
 
 const val DEFAULT_THROTTLE_DURATION_MS = 300L
+
+fun View.getFocusAndShowSoftInput() {
+    if (requestFocus()) {
+        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    }
+}
 
 inline fun SearchView.doOnQueryTextChanged(crossinline listener: (String) -> Unit) {
     setOnQueryTextListener(object : SearchView.OnQueryTextListener {

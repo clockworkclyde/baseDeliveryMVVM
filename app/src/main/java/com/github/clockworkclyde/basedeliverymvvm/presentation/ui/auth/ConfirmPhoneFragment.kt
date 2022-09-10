@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.clockworkclyde.basedeliverymvvm.R
@@ -21,9 +22,8 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
 
     override var bottomNavigationViewVisibility: Int = View.GONE
 
-    private val userVerificationArgs: ConfirmPhoneFragmentArgs by navArgs()
     private val viewModel: AuthViewModel by activityViewModels()
-
+    private val args: ConfirmPhoneFragmentArgs by navArgs()
     private lateinit var binding: FragmentConfirmPhoneBinding
 
     override fun onCreateView(
@@ -38,12 +38,22 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            viewModel.millisUntilFinished.observe(viewLifecycleOwner) { millis ->
+                val text =
+                    getString(R.string.time_until_resend_text).format((millis % 100).toString())
+                secondsUntilFinishedTextView.text = text
+            }
             editText.doOnQueryTextChanged { code ->
                 if (code.length == 6) {
-                    val credential = PhoneAuthProvider.getCredential(userVerificationArgs.id, code)
+                    val credential =
+                        PhoneAuthProvider.getCredential(viewModel.verificationId.value!!, code)
                     viewModel.signInWithCredential(credential)
                 }
             }
+        }
+
+        viewModel.retryButtonIsAvailable.observe(viewLifecycleOwner) { isAvailable ->
+            binding.button.isEnabled = isAvailable
         }
 
         viewModel.signInState.observe(viewLifecycleOwner) { state ->
@@ -67,6 +77,9 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
     }
 
     private fun navigateToInitializerFragment() {
-        findNavController().popBackStack()
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(args.destinationId, true)
+            .build()
+        findNavController().navigate(args.destinationId, null, navOptions)
     }
 }

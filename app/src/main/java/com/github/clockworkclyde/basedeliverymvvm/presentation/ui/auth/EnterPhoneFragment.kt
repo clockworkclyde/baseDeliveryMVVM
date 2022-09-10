@@ -9,9 +9,11 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentEnterPhoneBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
+import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getFocusAndShowSoftInput
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getTextWithoutDashesAndSpaces
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.matchesNumbersOnly
 import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
@@ -31,6 +33,7 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
 
     override var bottomNavigationViewVisibility: Int = View.GONE
     private val viewModel: AuthViewModel by activityViewModels()
+    private val args: EnterPhoneFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentEnterPhoneBinding
     private lateinit var phone: String
@@ -40,13 +43,11 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         viewModel.getAuthState().observe(viewLifecycleOwner) { isAuthenticated ->
             if (isAuthenticated) {
                 findNavController().popBackStack()
             }
         }
-
         binding = FragmentEnterPhoneBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -54,6 +55,7 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            headlineTextView.text = getString(args.stringRes)
             phoneEditText.addTextChangedListener(PhoneNumberFormattingTextWatcher())
             verifyBtn.onSingleClick { checkValidForResult(phoneEditText.getTextWithoutDashesAndSpaces()) }
         }
@@ -73,14 +75,14 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
         binding.apply {
             progressBar.isVisible = true
             container.isVisible = false
-            verifyBtn.isEnabled = false
+            verifyBtn.isVisible = false
         }
     }
 
     private fun verifyPhoneNumberWithOptions(phone: String) {
         val options = PhoneAuthOptions.newBuilder(Firebase.auth)
             .setPhoneNumber(phone)
-            .setTimeout(60L, TimeUnit.SECONDS)
+            .setTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
             .setActivity(requireActivity())
             .setCallbacks(stateCallbacks)
             .build()
@@ -113,14 +115,16 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
 
         override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
             super.onCodeSent(id, token)
-            navigateToUserVerificationWithParam(phone = phone, id = id)
+            viewModel.setPhone(phone)
+            viewModel.setVerificationId(id)
+            navigateToConfirmPhoneFragment()
         }
     }
 
-    private fun navigateToUserVerificationWithParam(phone: String, id: String) {
+    private fun navigateToConfirmPhoneFragment() {
         findNavController().navigate(
             EnterPhoneFragmentDirections
-                .actionUserSignInFragmentToUserVerificationFragment(phone, id)
+                .actionUserSignInFragmentToUserVerificationFragment(args.destinationId)
         )
     }
 
@@ -138,5 +142,16 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
             getString(id),
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.apply {
+            if (phoneEditText.isVisible) phoneEditText.getFocusAndShowSoftInput()
+        }
+    }
+
+    companion object {
+        private const val DEFAULT_TIMEOUT = 60L
     }
 }

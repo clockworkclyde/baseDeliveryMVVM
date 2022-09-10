@@ -20,8 +20,20 @@ class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : BaseViewModel() {
 
+    private val _phoneNumber = MutableLiveData("")
+    val phoneNumber: LiveData<String> get() = _phoneNumber
+
+    private val _verificationId = MutableLiveData("")
+    val verificationId: LiveData<String> get() = _verificationId
+
     private val _signInState = MutableLiveData<Response<User>>()
     val signInState: LiveData<Response<User>> get() = _signInState
+
+    private val _retryButtonIsAvailable = MutableLiveData(false)
+    val retryButtonIsAvailable: LiveData<Boolean> get() = _retryButtonIsAvailable
+
+    private val _millisUntilFinished = MutableLiveData<Long>()
+    val millisUntilFinished: LiveData<Long> get() = _millisUntilFinished
 
     fun signInWithCredential(credential: PhoneAuthCredential) {
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
@@ -42,5 +54,18 @@ class AuthViewModel @Inject constructor(
     fun saveUser(user: User) {
         UserPref.uid = user.uid
         UserPref.username = user.name
+    }
+
+    fun setPhone(phone: String) {
+        _phoneNumber.value = phone
+    }
+
+    fun setVerificationId(id: String) {
+        _verificationId.value = id
+    }
+
+    fun clearVerificationData() {
+        _verificationId.value = ""
+        _phoneNumber.value = ""
     }
 }

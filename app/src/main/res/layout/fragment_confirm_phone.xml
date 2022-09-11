@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="Enter the code from SMS" />
+            android:text="@string/confirm_phone_headline" />
 
         <EditText
             android:id="@+id/editText"
@@ -30,7 +30,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="number" />
 
         <Button
             android:id="@+id/button"
@@ -39,9 +40,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:enabled="false"
             android:text="@string/resend_sms_btn"
-            android:textAllCaps="false"
-            tools:enabled="false" />
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/secondsUntilFinishedTextView"
@@ -52,7 +53,9 @@
             android:layout_marginEnd="16dp"
             android:gravity="center"
             android:textStyle="bold"
-            tools:text="You can send code again in 60 sec" />
+            android:visibility="gone"
+            tools:text="You can send code again in 60 sec"
+            tools:visibility="visible" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

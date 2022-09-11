@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -41,7 +42,6 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            button.isEnabled = false
             editText.doOnQueryTextChanged { code ->
                 if (code.length == 6) {
                     val credential =
@@ -75,6 +75,7 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
         millisInFuture: Long,
         interval: Long = DEFAULT_INTERVAL_MS
     ) {
+        binding.secondsUntilFinishedTextView.isVisible = true
         viewModel.countDownTimer(millisInFuture, interval)
             .observe(viewLifecycleOwner) { millisUntilFinished ->
                 if (millisUntilFinished <= 0) {
@@ -90,7 +91,6 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
     }
 
     private fun showRetryButton() {
-        binding.secondsUntilFinishedTextView.text = ""
         binding.button.run {
             isEnabled = true
             onSingleClick { Toast.makeText(requireContext(), "Retry!", Toast.LENGTH_SHORT).show() }

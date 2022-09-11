@@ -64,13 +64,13 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
     }
 
     private fun tryToVerifyPhoneNumber(phone: String) {
-        this.phone = "+" + getSelectedCountryCode() + phone
+        this.phone = getSelectedCountryCodePrefix() + phone
         verifyPhoneNumberWithOptions(this.phone)
         showProgress()
     }
 
-    private fun getSelectedCountryCode(): String {
-        return binding.phonePrefixTextView.selectedCountryCode
+    private fun getSelectedCountryCodePrefix(): String {
+        return "+" + binding.phonePrefixTextView.selectedCountryCode
     }
 
     private fun showProgress() {
@@ -84,7 +84,7 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
     private fun verifyPhoneNumberWithOptions(phone: String) {
         val options = PhoneAuthOptions.newBuilder(Firebase.auth)
             .setPhoneNumber(phone)
-            .setTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+            .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(requireActivity())
             .setCallbacks(stateCallbacks)
             .build()
@@ -93,11 +93,12 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
 
     private fun checkValidForResult(phone: String) {
         if (phone.matchesNumbersOnly() && phone.length == 10) {
-            tryToVerifyPhoneNumber(phone)
+            if (isNotTimeout()) navigateToConfirmPhoneFragment()
+            else tryToVerifyPhoneNumber(phone)
         } else if (phone.isEmpty()) {
-            showValidationError(R.string.empty_phone_field)
+            showError(R.string.empty_phone_field)
         } else {
-            showValidationError(R.string.invalid_symbols_phone_field)
+            showError(R.string.invalid_symbols_phone_field)
         }
     }
 
@@ -110,8 +111,8 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
         override fun onVerificationFailed(e: FirebaseException) {
             Timber.e(e)
             when (e) {
-                is FirebaseNetworkException -> showAuthError("Error. Please check your internet connection")
-                else -> showAuthError(e.toString())
+                is FirebaseNetworkException -> showError("Error. Please check your internet connection")
+                else -> showError(e.toString())
             }
         }
 
@@ -131,20 +132,12 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
         )
     }
 
-    private fun showAuthError(id: Int) {
+    private fun showError(id: Int) {
         Toast.makeText(requireContext(), getString(id), Toast.LENGTH_SHORT).show()
     }
 
-    private fun showAuthError(text: String) {
+    private fun showError(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showValidationError(id: Int) {
-        Toast.makeText(
-            requireContext(),
-            getString(id),
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     override fun onResume() {
@@ -154,7 +147,7 @@ class EnterPhoneFragment : BaseFragment(R.layout.fragment_enter_phone) {
         }
     }
 
-    companion object {
-        private const val DEFAULT_TIMEOUT = 60L
-    }
+    private fun isNotTimeout() =
+        Calendar.getInstance().timeInMillis < TimeCounterPref.millis + 60000L
+
 }

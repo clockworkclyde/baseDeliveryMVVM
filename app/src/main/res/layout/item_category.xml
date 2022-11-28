@@ -18,6 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:spanCount="2"
-        tools:listitem="@layout/item_menu" />
+        tools:listitem="@layout/item_dish" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

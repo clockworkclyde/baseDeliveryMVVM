@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.RoundedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:rfl_cornerTopLeftRadius="20dp"
+    app:rfl_cornerTopRightRadius="20dp"
+    tools:context=".presentation.ui.order.EditOrderPhoneFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/phonePrefixTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_defaultNameCode="@string/default_country_code_prefix"
+                app:ccp_textSize="21sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="phone"
+                android:inputType="phone|number"
+                android:textSize="@dimen/phone_field_text_size"
+                tools:ignore="LabelFor" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/dishes_add_to_cart_button"
+            android:padding="8dp"
+            android:text="@string/button_edit_order_phone"
+            android:textAllCaps="false"
+            android:textSize="21sp"
+            app:cornerRadius="@dimen/radius_default_app" />
+    </LinearLayout>
+</com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.RoundedFrameLayout>

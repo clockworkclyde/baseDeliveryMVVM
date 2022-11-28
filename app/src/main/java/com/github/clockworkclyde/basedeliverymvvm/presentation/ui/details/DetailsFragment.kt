@@ -1,27 +1,76 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.details
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentDetailsBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseDialogFragment
-import com.github.clockworkclyde.models.ui.menu.DishItem
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getScreenSize
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.OrderCartViewModel
+import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.QuantityButtonAction
+import com.github.clockworkclyde.basedeliverymvvm.util.clearList
+import com.github.clockworkclyde.basedeliverymvvm.util.loadDishDetailsImage
+import com.github.clockworkclyde.basedeliverymvvm.util.onSingleClick
+import com.github.clockworkclyde.basedeliverymvvm.util.setList
+import com.github.clockworkclyde.models.ui.base.ViewState
+import com.github.clockworkclyde.models.ui.dishes.DishItem
+import com.github.clockworkclyde.models.ui.order.DishExtra
+import com.google.android.material.button.MaterialButton
+import dagger.hilt.android.AndroidEntryPoint
 
-class DetailsFragment : BaseDialogFragment() {
+@AndroidEntryPoint
+class DetailsFragment : BaseDialogFragment(), OnExtraClickListener {
+
+    override var isExpandedOnStart: Boolean = true
 
     private lateinit var binding: FragmentDetailsBinding
+    private lateinit var button: MaterialButton
     private val args: DetailsFragmentArgs by navArgs()
+    private val item by lazy { args.dishItem }
     private val glide by lazy { Glide.with(this) }
+    private val adapter by lazy { DishesExtrasAdapter(this) }
+
+    private val extrasViewModel: DishAttributesViewModel by viewModels()
+    private val orderViewModel: OrderCartViewModel by viewModels()
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.apply {
+            val density = requireContext().resources.displayMetrics.density
+            val coordinator =
+                findViewById<CoordinatorLayout>(com.google.android.material.R.id.coordinator)
+            val container = findViewById<FrameLayout>(com.google.android.material.R.id.container)
+            val buttonLayout = layoutInflater.inflate(R.layout.layout_details_button, null)
+
+            buttonLayout.findViewById<MaterialButton>(R.id.button)?.let { button = it }
+            buttonLayout.layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.BOTTOM
+            }
+            container?.addView(buttonLayout)
+            buttonLayout.post {
+                (coordinator?.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                    buttonLayout.measure(
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                    )
+                    this.bottomMargin = (buttonLayout.measuredHeight - 8 * density).toInt()
+                    container?.requestLayout()
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,29 +83,102 @@ class DetailsFragment : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        applyDishLayout()
+        applyQuantityButtons()
+        setDishQuantity()
+        initDishExtras()
+        setDishExtras()
+        setSelectedExtras()
+    }
 
-        with(binding) {
-            val screenSize = getScreenSize(requireContext())
-            val item = args.dishItem
-            val radius = resources.getDimensionPixelOffset(R.dimen.card_radius)
-            glide.load(item.image)
-                .override(screenSize.x, (screenSize.y * 9f / 16).toInt())
-                .transform(
-                    CenterCrop(),
-                    RoundedCorners(radius)
-                )
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView)
+    private fun initDishExtras() {
+        extrasViewModel.loadExtrasForCategory(item.categoryId)
+    }
 
-            titleTextView.text = item.title
-            button.text = "Add to order for ${item.price} p."
-            button.onSingleClick { provideOrderCartClick(item) }
+    private fun setDishExtras() {
+        extrasViewModel.viewState
+            .observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    is ViewState.Empty -> {
+                        binding.extrasRecyclerView.isVisible = false
+                    }
+                    is ViewState.Error -> {}
+                    is ViewState.Loading -> adapter.clearList()
+                    is ViewState.Success -> {
+                        val data = state.data
+                        adapter.setList(data)
+                        data.filter { it.isSelected }
+                            .also { setAddToOrderClick(it) }
+                            .sumOf { it.price * it.quantity }
+                            .let {
+                                updateTotalPrice(it)
+                            }
+                    }
+                }
+            }
+    }
+
+    private fun setSelectedExtras() {
+        val extras = args.extrasList.toList()
+        if (extras.isNotEmpty()) {
+            extrasViewModel.setSelectedExtras(extras)
         }
     }
 
-    private fun provideOrderCartClick(item: DishItem) {
-        val navController = findNavController()
-        navController.previousBackStackEntry?.savedStateHandle?.set("item", item)
-        navController.popBackStack()
+    private fun setDishQuantity() {
+        extrasViewModel.dishQuantity.observe(viewLifecycleOwner) {
+            binding.dishQuantityTextView.text = it.toString()
+        }
+    }
+
+    private fun setAddToOrderClick(extras: List<DishExtra>) {
+        button.apply {
+            onSingleClick {
+                extrasViewModel.dishQuantity.observe(viewLifecycleOwner) {
+                    addDishToOrderCart(item, extras, it)
+                }
+            }
+        }
+    }
+
+    private fun updateTotalPrice(value: Int = 0) {
+        binding.dishTotalPriceTextView.apply {
+            text = "${value + item.price} ₽."
+        }
+    }
+
+    private fun applyDishLayout() {
+        with(binding) {
+            glide.loadDishDetailsImage(item.image, imageView)
+            titleTextView.text = item.title
+            servingSizeTextView.text = item.servingSize
+            extrasRecyclerView.adapter = adapter
+            updateTotalPrice()
+        }
+    }
+
+    private fun applyQuantityButtons() {
+        binding.apply {
+            addDishQuantityButton.setOnClickListener {
+                extrasViewModel.editDishQuantity(QuantityButtonAction.MORE)
+            }
+            reduceDishQuantityButton.setOnClickListener {
+                extrasViewModel.editDishQuantity(QuantityButtonAction.LESS)
+            }
+        }
+    }
+
+    private fun addDishToOrderCart(item: DishItem, extras: List<DishExtra>, quantity: Int) {
+        if (orderViewModel.addToOrderCart(item.id, extras, quantity)) {
+            findNavController().popBackStack()
+        }
+    }
+
+    override fun onSelectItemClick(item: DishExtra) {
+        extrasViewModel.updateSelection(item)
+    }
+
+    override fun onButtonClick(item: DishExtra, action: ExtraButtonAction) {
+        extrasViewModel.updateSelection(item, action)
     }
 }

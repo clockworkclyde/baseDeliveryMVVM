@@ -5,36 +5,100 @@
       <map>
         <entry key="..\:/Users/ThisI/.gradle/caches/transforms-3/536813aa38473a630cc7319e3b1d88cd/transformed/material-1.6.1/res/layout/design_bottom_sheet_dialog.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/bg_bottom_sheet.xml" value="0.1335" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/bg_color_add_to_order.xml" value="0.116" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/bg_gray_gradient.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/bg_popup_round_corners.xml" value="0.1445" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/bg_progress_menu_item.xml" value="0.1" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/bg_round_corners.xml" value="0.1155" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/bg_round_corners_tab.xml" value="0.1305" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/bg_round_corners_tab_selected.xml" value="0.1305" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.203" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.1615" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_add_shopping_cart_24.xml" value="0.1155" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1335" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_credit_card_24.xml" value="0.1155" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1445" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_delete_forever_24.xml" value="0.1445" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_delete_sweep_24.xml" value="0.124" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_delivery_dining_24.xml" value="0.1445" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1445" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_fastfood_24.xml" value="0.1445" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_house_24.xml" value="0.1155" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.1445" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_phone_callback_24.xml" value="0.1155" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_remove_24.xml" value="0.203" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_remove_circle_outline_24.xml" value="0.1155" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_remove_shopping_cart_24.xml" value="0.1335" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_replay_24.xml" value="0.1335" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1335" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.1335" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_indicator_circle.xml" value="0.152" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1335" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_twotone_location_on_24.xml" value="0.1" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/ic_user.xml" value="0.138" />
-        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/activity_main.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/icon_add_to_order.xml" value="0.116" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/icon_reduce_in_order.xml" value="0.116" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/drawable/selector_dishes_tab.xml" value="0.1305" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/bottom_navigation_bar.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/bottom_sheet.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/btn_bottom_details.xml" value="0.2515625" />
-        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_cart.xml" value="0.4" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/cart_fragment.xml" value="0.2064102564102564" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_address_suggestions.xml" value="0.264" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_addresses.xml" value="0.264" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_bottom_navigation.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_cart.xml" value="0.264" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_checkout.xml" value="0.264" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_confirm_phone.xml" value="0.264" />
-        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_details.xml" value="0.264" />
-        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_enter_phone.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_delivery_details.xml" value="0.264" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_details.xml" value="0.1" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_dishes.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_edit_addresses.xml" value="0.264" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_edit_options_selection.xml" value="0.225" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_edit_order_options.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_edit_order_phone.xml" value="0.2515625" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_edit_payment_method.xml" value="0.2515625" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_enter_address.xml" value="0.264" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_enter_address_location.xml" value="0.1" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_enter_phone.xml" value="0.1" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_host.xml" value="0.2515625" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_main.xml" value="0.264" />
-        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_profile.xml" value="0.2526041666666667" />
-        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_search.xml" value="0.2515625" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_order_history_details.xml" value="0.4" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_search.xml" value="0.152" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_search_address.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_timeline_and_addresses.xml" value="0.2515625" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_user_auth.xml" value="0.4" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_user_confirm.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_user_sign_in.xml" value="0.2515625" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_user_verification.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/fragment_verify_phone.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_address.xml" value="0.4" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_cart.xml" value="0.4" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_category.xml" value="0.1" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_dish.xml" value="0.4" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_dish_extra.xml" value="0.4" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_dish_selected.xml" value="0.44244604316546765" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_edit_address.xml" value="0.264" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_edit_addresses.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_edit_selection.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_menu.xml" value="0.4" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_menu_error.xml" value="0.264" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_menu_progress.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_new_address.xml" value="0.2515625" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_order_cart.xml" value="0.4" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_selected_dish.xml" value="0.20185185185185187" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/item_suggestion.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/layout_details_button.xml" value="0.20185185185185187" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/navigation_bottom_bar.xml" value="0.2515625" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/order_dish_extra.xml" value="0.536" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/layout/window_addresses_actions.xml" value="0.4" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/menu/bottom_menu.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/menu/main_menu.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/menu/menu_addresses_actions.xml" value="0.1140625" />
+        <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/menu/menu_addresses_list_actions.xml" value="0.2515625" />
         <entry key="..\:/Users/ThisI/AndroidStudioProjects/BaseDeliveryMVVM/app/src/main/res/menu/search_menu.xml" value="0.2515625" />
       </map>
     </option>

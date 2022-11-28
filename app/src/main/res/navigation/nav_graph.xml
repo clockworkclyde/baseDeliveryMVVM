@@ -3,52 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainScreenFragment">
+    app:startDestination="@id/dishesFragment">
 
     <fragment
-        android:id="@+id/mainScreenFragment"
-        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.main.MainScreenFragment"
-        android:label="@string/home"
-        tools:layout="@layout/fragment_main">
+        android:id="@+id/dishesFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.dishes.DishesFragment"
+        android:label="@string/dishes_label"
+        tools:layout="@layout/fragment_dishes">
         <action
-            android:id="@+id/action_mainScreenFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            android:id="@+id/action_dishesFragment_to_searchDishesFragment"
+            app:destination="@id/searchDishesFragment" />
     </fragment>
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.search.SearchFragment"
-        android:label="@string/search"
-        tools:layout="@layout/fragment_search" />
+        android:id="@+id/searchDishesFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.search.SearchDishesFragment"
+        android:label="@string/search_label"
+        tools:layout="@layout/fragment_search_dishes" />
     <action
         android:id="@+id/action_to_detailsFragment"
         app:destination="@id/detailsFragment" />
     <dialog
         android:id="@+id/detailsFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.details.DetailsFragment"
-        android:label="@string/details"
+        android:label="@string/details_label"
         tools:layout="@layout/fragment_details">
         <argument
             android:name="dishItem"
-            app:argType="com.github.clockworkclyde.models.ui.menu.DishItem" />
+            app:argType="com.github.clockworkclyde.models.ui.dishes.DishItem" />
+        <argument
+            android:name="extrasList"
+            app:argType="com.github.clockworkclyde.models.ui.order.DishExtraEntity[]" />
     </dialog>
     <fragment
         android:id="@+id/orderCartFragment"
-        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.cart.OrderCartFragment"
-        android:label="@string/cart"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.OrderCartFragment"
+        android:label="@string/cart_label"
         tools:layout="@layout/fragment_cart">
         <action
             android:id="@+id/action_orderCartFragment_to_enterPhoneFragment"
-            app:destination="@id/enterPhoneFragment" />
+            app:destination="@id/enterPhoneFragment"
+            app:enterAnim="@anim/anim_enter_up"
+            app:popExitAnim="@anim/anim_exit_down" />
+        <action
+            android:id="@+id/action_orderCartFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment"
+            app:enterAnim="@anim/anim_slide_in"
+            app:popExitAnim="@anim/anim_slide_out" />
     </fragment>
 
     <fragment
         android:id="@+id/enterPhoneFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.auth.EnterPhoneFragment"
-        android:label="@string/enter_phone"
+        android:label="@string/enter_phone_label"
         tools:layout="@layout/fragment_enter_phone">
         <action
             android:id="@+id/action_userSignInFragment_to_userVerificationFragment"
-            app:destination="@id/confirmPhoneFragment" />
+            app:destination="@id/confirmPhoneFragment"
+            app:enterAnim="@anim/anim_slide_in"
+            app:popExitAnim="@anim/anim_slide_out" />
         <argument
             android:name="stringRes"
             app:argType="integer" />
@@ -59,7 +71,7 @@
     <fragment
         android:id="@+id/confirmPhoneFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.auth.ConfirmPhoneFragment"
-        android:label="@string/confirm_phone"
+        android:label="@string/confirm_phone_label"
         tools:layout="@layout/fragment_confirm_phone">
         <argument
             android:name="destinationId"
@@ -68,10 +80,60 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.profile.ProfileFragment"
-        android:label="@string/profile_screen"
+        android:label="@string/profile_label"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_enterPhoneFragment"
-            app:destination="@id/enterPhoneFragment" />
+            app:destination="@id/enterPhoneFragment"
+            app:enterAnim="@anim/anim_enter_up"
+            app:popExitAnim="@anim/anim_exit_down" />
     </fragment>
+    <fragment
+        android:id="@+id/enterAddressLocationOnMapFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.address.EnterAddressLocationFragment"
+        android:label="@string/label_enter_address_location"
+        tools:layout="@layout/fragment_enter_address_location" />
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.CheckoutFragment"
+        android:label="@string/checkout_label"
+        tools:layout="@layout/fragment_enter_address_location">
+        <action
+            android:id="@+id/action_checkoutFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment"
+            app:enterAnim="@anim/anim_slide_in"
+            app:popExitAnim="@anim/anim_slide_out" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_editOrderPhoneFragment"
+            app:destination="@id/editOrderPhoneFragment" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_editOrderPaymentFragment"
+            app:destination="@id/editOrderPaymentFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_to_enterAddressFragment"
+        app:destination="@id/enterAddressLocationOnMapFragment" />
+    <fragment
+        android:id="@+id/searchAddressFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.address.SearchAddressFragment"
+        android:label="@string/label_search_address"
+        tools:layout="@layout/fragment_search_address" />
+    <dialog
+        android:id="@+id/editOrderPhoneFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.EditOrderPhoneFragment"
+        android:label="fragment_edit_order_phone"
+        tools:layout="@layout/fragment_edit_order_phone" />
+    <dialog
+        android:id="@+id/editOrderPaymentFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.EditOrderPaymentFragment"
+        android:label="fragment_edit_payment_method"
+        tools:layout="@layout/fragment_edit_payment_method" />
+    <fragment
+        android:id="@+id/orderHistoryDetailsFragment"
+        android:name="com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.OrderDetailsFragment"
+        android:label="fragment_order_history_details"
+        tools:layout="@layout/fragment_order_details" />
+    <action
+        android:id="@+id/action_to_orderHistoryDetailsFragment"
+        app:destination="@id/orderHistoryDetailsFragment" />
 </navigation>

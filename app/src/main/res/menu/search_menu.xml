@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_fragment_search"
-        android:title="@string/search"
+        android:title="@string/search_label"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always"/>
 

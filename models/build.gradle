@@ -37,6 +37,9 @@ dependencies {
     api libs.kotPref
     api libs.room
     api libs.retrofitGsonConverter
+    api "com.mapbox.search:mapbox-search-android:1.0.0-beta.35"
+    api libs.firebaseDatabase
+
     implementation libs.daggerHilt
     kapt libs.daggerHiltKapt
 }

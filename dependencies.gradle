@@ -57,11 +57,10 @@ ext.libs = [
 
         // Firebase
         firebaseAuth               : "com.google.firebase:firebase-auth-ktx:21.0.8",
+        firebaseDatabase           : "com.google.firebase:firebase-database:20.0.6",
         /* coroutines support for firebase operations */
         firebaseCoroutines         : 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1',
 
         // Country code picker
-        ccp                        : "com.hbb20:ccp:2.6.1"
-
-
+        ccp                        : "com.hbb20:ccp:2.6.1",
 ]

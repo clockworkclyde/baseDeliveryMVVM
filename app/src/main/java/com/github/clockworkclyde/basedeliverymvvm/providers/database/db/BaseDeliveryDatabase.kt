@@ -12,5 +12,4 @@ import com.github.clockworkclyde.models.local.dishes.DishEntity
 )
 abstract class BaseDeliveryDatabase : RoomDatabase() {
     abstract fun deliveryDao(): DishesDao
-    //abstract fun orderCartDao(): OrderCartDao
 }

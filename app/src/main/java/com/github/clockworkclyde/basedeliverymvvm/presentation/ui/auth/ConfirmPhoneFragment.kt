@@ -11,12 +11,12 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.clockworkclyde.basedeliverymvvm.R
-import com.github.clockworkclyde.basedeliverymvvm.data.repository.Response
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentConfirmPhoneBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.doOnQueryTextChanged
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
+import com.github.clockworkclyde.basedeliverymvvm.util.doOnQueryTextChanged
+import com.github.clockworkclyde.basedeliverymvvm.util.onSingleClick
 import com.github.clockworkclyde.models.local.auth.TimeCounterPref
+import com.github.clockworkclyde.models.remote.base.Response
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -54,7 +54,7 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
         viewModel.signInState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is Response.Error -> showError(state.error)
-                is Response.Loading -> showProgress()
+                //todo is Response.Loading -> showProgress() edit response to viewstate class
                 is Response.Success -> {
                     viewModel.saveUser(state.data)
                     navigateToInitializerFragment()
@@ -77,16 +77,13 @@ class ConfirmPhoneFragment : BaseFragment(R.layout.fragment_confirm_phone) {
     ) {
         binding.secondsUntilFinishedTextView.isVisible = true
         viewModel.countDownTimer(millisInFuture, interval)
-            .observe(viewLifecycleOwner) { millisUntilFinished ->
-                if (millisUntilFinished <= 0) {
+            .observe(viewLifecycleOwner) { seconds ->
+                if (seconds <= 0) {
                     showRetryButton()
-                    return@observe
+                    //return@observe
                 }
-                val str = millisUntilFinished.toString()
                 binding.secondsUntilFinishedTextView.text =
-                    getString(R.string.time_until_resend_text).format(
-                        str.substring(0, str.length - 3)
-                    )
+                    getString(R.string.time_until_resend_text).format(seconds.toString())
             }
     }
 

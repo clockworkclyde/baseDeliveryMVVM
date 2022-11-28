@@ -1,7 +1,7 @@
 package com.github.clockworkclyde.basedeliverymvvm.di
 
 import com.github.clockworkclyde.network.api.BuildConfig
-import com.github.clockworkclyde.network.api.interactor.DishesApi
+import com.github.clockworkclyde.network.api.api.DishesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +38,7 @@ class ApiModule {
 
     @Provides
     @Singleton
-    internal fun provideRetrofit(
+    fun provideRetrofit(
         httpBuilder: OkHttpClient.Builder,
         retrofitBuilder: Retrofit.Builder
     ) = retrofitBuilder

@@ -1,18 +1,16 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.auth
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.github.clockworkclyde.basedeliverymvvm.data.repository.AuthRepository
-import com.github.clockworkclyde.basedeliverymvvm.data.repository.Response
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseViewModel
 import com.github.clockworkclyde.models.local.auth.User
 import com.github.clockworkclyde.models.local.auth.UserPref
+import com.github.clockworkclyde.models.remote.base.Response
 import com.google.firebase.auth.PhoneAuthCredential
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,9 +39,13 @@ class AuthViewModel @Inject constructor(
         authRepository.signOut().collect { emit(it) }
     }
 
-    /** emits /true/ if user is authenticated **/
+    /** emits true if user is authenticated **/
     fun getAuthState() = liveData(Dispatchers.IO) {
         authRepository.getFirebaseAuthState().collect { emit(it) }
+    }
+
+    fun getCurrentUser() = liveData {
+        emit(authRepository.tryToGetCurrentUser())
     }
 
     fun saveUser(user: User) {
@@ -65,11 +67,21 @@ class AuthViewModel @Inject constructor(
     }
 
     fun countDownTimer(millisInFuture: Long, interval: Long) = liveData {
-        var time = millisInFuture
-        while (millisInFuture > 0) {
-            time -= interval
-            emit(time)
+//        var time = millisInFuture
+//        while (millisInFuture > 0) {
+//            time -= interval
+//            emit(time)
+//            delay(interval)
+//        }
+
+        val seconds = millisInFuture.toSeconds()
+        repeat(seconds) {
+            emit(seconds - it)
             delay(interval)
         }
+    }
+
+    companion object {
+        private fun Long.toSeconds() = this.toInt() / 1000
     }
 }

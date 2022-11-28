@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.github.clockworkclyde.models.mappers.IConvertableTo
-import com.github.clockworkclyde.models.ui.menu.DishItem
+import com.github.clockworkclyde.models.ui.dishes.DishItem
 
 @Entity
 data class DishEntity(

@@ -1,7 +1,7 @@
 package com.github.clockworkclyde.network.api
 
 import com.github.clockworkclyde.models.remote.dishes.DishModel
-import com.github.clockworkclyde.network.api.interactor.DishesApi
+import com.github.clockworkclyde.network.api.api.DishesApi
 import javax.inject.Inject
 
 class DeliveryRemoteDataSourceImpl @Inject constructor(private val api: DishesApi) {

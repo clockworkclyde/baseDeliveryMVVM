@@ -1,6 +1,5 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
@@ -9,6 +8,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 abstract class BaseDialogFragment : BottomSheetDialogFragment() {
+
+    protected open var isExpandedOnStart: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +20,7 @@ abstract class BaseDialogFragment : BottomSheetDialogFragment() {
         super.onStart()
         val bottomSheetBehavior = BottomSheetBehavior.from(requireView().parent as View)
         bottomSheetBehavior.skipCollapsed = true
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (isExpandedOnStart) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }

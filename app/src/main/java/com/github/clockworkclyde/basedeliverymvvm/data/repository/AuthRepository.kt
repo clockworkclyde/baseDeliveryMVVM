@@ -2,6 +2,7 @@ package com.github.clockworkclyde.basedeliverymvvm.data.repository
 
 import com.github.clockworkclyde.models.local.auth.User
 import com.github.clockworkclyde.models.remote.auth.UserModel
+import com.github.clockworkclyde.models.remote.base.Response
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthCredential
@@ -13,15 +14,12 @@ import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 import javax.inject.Inject
 
-sealed class Response<out T> {
-    object Loading : Response<Nothing>()
-    data class Success<T>(val data: T) : Response<T>()
-    data class Error(val error: Throwable) : Response<Nothing>()
-}
-
+// todo переделать в юзкейсы
 class AuthRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) {
+
+    fun getUserUid(): String? = firebaseAuth.currentUser?.uid
 
     fun signOut(): Flow<Boolean> = flow {
         try {
@@ -35,7 +33,6 @@ class AuthRepository @Inject constructor(
 
     suspend fun signInWithCredential(credential: PhoneAuthCredential): Flow<Response<User>> =
         flow {
-            emit(Response.Loading)
             try {
                 val user = firebaseAuth.signInWithCredential(credential).await().user
                 if (user != null) {
@@ -43,6 +40,7 @@ class AuthRepository @Inject constructor(
                 }
             } catch (e: Exception) {
                 // todo FirebaseAuthInvalidCredentialsException for invalid credential
+                Timber.e(e)
                 emit(Response.Error(e))
             }
         }
@@ -58,6 +56,16 @@ class AuthRepository @Inject constructor(
     private fun getUser(firebaseUser: FirebaseUser): UserModel {
         val uid = firebaseUser.uid
         val name = firebaseUser.displayName ?: "User@${firebaseUser.uid.hashCode()}"
-        return UserModel(uid, name)
+        val phone = firebaseUser.phoneNumber ?: ""
+        return UserModel(uid, name, phone)
+    }
+
+    fun tryToGetCurrentUser(): Response<User> {
+        return try {
+            Response.Success(getUser(firebaseAuth.currentUser!!).convertTo())
+        } catch (e: Exception) {
+            Timber.e(e)
+            Response.Error(e)
+        }
     }
 }

@@ -3,27 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:rfl_cornerTopLeftRadius="10dp"
-    app:rfl_cornerTopRightRadius="10dp"
+    android:layout_height="wrap_content"
+    app:rfl_cornerTopLeftRadius="@dimen/radius_default_app"
+    app:rfl_cornerTopRightRadius="@dimen/radius_default_app"
     tools:context=".presentation.ui.details.DetailsFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:paddingBottom="88dp">
+        android:paddingBottom="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:scaleType="centerCrop"
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:contentDescription="@null"
+                android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,29 +35,93 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:textSize="24sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView"
-                tools:text="Title text view" />
+                tools:text="Суперпицца острая многосыра" />
 
-            <Button
-                android:id="@+id/button"
+            <LinearLayout
+                android:id="@+id/editQuantityWithPriceLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/titleTextView"
-                tools:text="Add to Order Cart" />
+                app:layout_constraintTop_toBottomOf="@id/titleTextView">
+
+                <TextView
+                    android:id="@+id/dishTotalPriceTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal"
+                    android:textSize="28sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                    tools:text="680 ₽." />
+
+                <ImageButton
+                    android:id="@+id/reduceDishQuantityButton"
+                    android:layout_width="37dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/icon_reduce_in_order"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/dishQuantityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="28sp"
+                    tools:text="1" />
+
+                <ImageButton
+                    android:id="@+id/addDishQuantityButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/icon_add_to_order"
+                    android:contentDescription="@null" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/servingSizeTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editQuantityWithPriceLayout"
+                tools:text="45 см, тесто на выбор" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/extrasRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/servingSizeTextView"
+                tools:listitem="@layout/item_dish_extra" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 </com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.RoundedFrameLayout>

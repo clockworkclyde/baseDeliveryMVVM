@@ -65,8 +65,20 @@ dependencies {
     implementation libs.kotPref
     implementation libs.kotPrefLivedata
     implementation libs.firebaseAuth
+    implementation libs.firebaseDatabase
     implementation libs.firebaseCoroutines
     implementation libs.ccp
+
+    // Mapbox SDK
+    def mapboxVersion = '9.6.2'
+    implementation "com.mapbox.mapboxsdk:mapbox-android-sdk:$mapboxVersion"
+    implementation ("com.mapbox.mapboxsdk:mapbox-android-sdk:$mapboxVersion"){
+        exclude group: 'group_name', module: 'module_name'
+    }
+    // Mapbox Search Addresses (forward & reverse)
+    implementation "com.mapbox.search:mapbox-search-android:1.0.0-beta.35"
+    // Mapbox Services (static map api)
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:6.9.0-beta.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

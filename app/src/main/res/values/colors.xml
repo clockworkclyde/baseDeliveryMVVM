@@ -8,14 +8,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="app_theme_primary">#9B5B5B</color>
+    <color name="dishes_add_to_cart_button">@color/app_theme_primary</color>
+    <color name="bg_main_toolbar">#F3EDED</color>
 
-    <color name="space_blue">#e6e9ed</color>
-    <color name="cart_divider_background">@color/space_blue</color>
+    <color name="white_space_blue">#e6e9ed</color>
+    <color name="cart_divider_background">@color/white_space_blue</color>
 
     <color name="mint">#8AAF8B</color>
     <color name="shimmer">#DDDDDD</color>
 
+    <color name="edit_text_hint">#DD000000</color>
+
+    <color name="start_bg_gradient">#fbfbfb</color>
+    <color name="end_bg_gradient">#e2e2e8</color>
+
     <color name="dark_placeholder">#FF4F4F4F</color>
     <color name="placeholder">#c4c6c7</color>
-
+    <color name="item_cart_price">#263238</color>
+    <color name="dishes_selected_tab">#9B5B5B</color>
+    <color name="dishes_not_selected_tab">#B1A9A9B2</color>
 </resources>

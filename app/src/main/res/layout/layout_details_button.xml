@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.RoundedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    app:rfl_cornerTopLeftRadius="10dp"
+    app:rfl_cornerTopRightRadius="10dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/dishes_add_to_cart_button"
+        android:padding="8dp"
+        android:text="@string/add_to_cart"
+        android:textAllCaps="false"
+        android:textSize="21sp"
+        app:cornerRadius="@dimen/radius_default_app" />
+
+</com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.RoundedFrameLayout>

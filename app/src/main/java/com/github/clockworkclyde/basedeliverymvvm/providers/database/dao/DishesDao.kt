@@ -13,11 +13,17 @@ interface DishesDao {
     @Query("SELECT * FROM DishEntity WHERE id_category_owner = :id")
     fun getDishesByCategoryId(id: Int): Flow<List<DishEntity>>
 
+    @Query("SELECT * FROM DishEntity")
+    suspend fun getAllDishes(): List<DishEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDishes(items: List<DishEntity>)
 
     @Query("SELECT * FROM DishEntity WHERE title LIKE '%' || :query || '%' ORDER BY title ASC")
     fun searchDishesByQuery(query: String): Flow<List<DishEntity>>
+
+    @Query("SELECT * FROM DishEntity WHERE id_external = :id")
+    suspend fun searchDishById(id: Long): DishEntity?
 
     @Query("DELETE FROM DishEntity")
     suspend fun clearAllDishes()

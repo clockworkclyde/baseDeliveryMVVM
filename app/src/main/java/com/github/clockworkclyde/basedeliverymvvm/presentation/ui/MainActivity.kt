@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,35 +19,51 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupApplicationActionBar()
+        setupAllWithNavController()
 
-        val navHostFragment =
+        navController.addOnDestinationChangedListener { _, _, _ -> currentFocus?.hideKeyboard() }
+    }
+
+    private fun setupApplicationActionBar() {
+        setSupportActionBar(binding.toolbar)
+    }
+
+    private fun setupAllWithNavController() {
+        navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        navController.addOnDestinationChangedListener { _, _, _ -> currentFocus?.hideKeyboard() }
         val appBarConfiguration =
             AppBarConfiguration(
                 setOf(
-                    R.id.mainScreenFragment,
+                    R.id.dishesFragment,
                     R.id.orderCartFragment,
-                    R.id.profileFragment,
-
+                    R.id.profileFragment
                     )
             )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.bottomNav.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
     }
 
+    fun getCurrentNavigationFragment(): Fragment {
+        return navHostFragment.childFragmentManager.fragments.first()
+    }
+
+    fun getNavHostFragmentNavController(): NavController {
+        return navController
+    }
+
     fun setBottomNavigationViewVisibility(visibility: Int) {
-        binding.bottomNav.visibility = visibility
+        binding.bottomNavigationFragmentContainer.visibility = visibility
     }
 
     private fun View.hideKeyboard() {

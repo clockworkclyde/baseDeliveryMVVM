@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="4dp"
+        android:left="4dp"
+        android:right="4dp"
+        android:top="4dp">
+        <shape>
+            <corners android:radius="20dp" />
+            <padding
+                android:bottom="0dip"
+                android:left="0dip"
+                android:right="0dip"
+                android:top="0dip" />
+            <solid android:color="@color/dishes_selected_tab" />
+        </shape>
+    </item>
+</layer-list>

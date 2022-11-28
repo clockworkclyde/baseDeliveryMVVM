@@ -13,10 +13,10 @@ import androidx.navigation.fragment.navArgs
 import com.github.clockworkclyde.basedeliverymvvm.R
 import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentEnterPhoneBinding
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseFragment
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getFocusAndShowSoftInput
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.getTextWithoutDashesAndSpaces
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.matchesNumbersOnly
-import com.github.clockworkclyde.basedeliverymvvm.presentation.util.onSingleClick
+import com.github.clockworkclyde.basedeliverymvvm.util.getFocusAndShowSoftInput
+import com.github.clockworkclyde.basedeliverymvvm.util.getTextWithoutDashesAndSpaces
+import com.github.clockworkclyde.basedeliverymvvm.util.matchesNumbersOnly
+import com.github.clockworkclyde.basedeliverymvvm.util.onSingleClick
 import com.github.clockworkclyde.models.local.auth.TimeCounterPref
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException

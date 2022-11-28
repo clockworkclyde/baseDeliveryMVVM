@@ -4,37 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.cart.OrderCartFragment">
+    android:background="@drawable/bg_gray_gradient"
+    tools:context=".presentation.ui.order.OrderCartFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/createOrderButton"
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingBottom="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_cart" />
+        app:layout_constraintBottom_toTopOf="@id/buttonLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_order_cart" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/createOrderButton"
+    <RelativeLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"
         tools:visibility="visible"
-        android:layout_width="0dp"
-        android:layout_margin="4dp"
-        android:layout_height="wrap_content"
-        android:textSize="19sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="@string/total_price"
-        android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="parent">
+        android:background="@drawable/bg_bottom_sheet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView">
 
-    </com.google.android.material.button.MaterialButton>
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createOrderButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:textAllCaps="false"
+            android:textSize="21sp"
+            app:cornerRadius="@dimen/radius_default_app"
+            tools:text="@string/total_price" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

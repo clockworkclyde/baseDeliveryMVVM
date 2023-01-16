@@ -20,7 +20,7 @@ import com.github.clockworkclyde.models.ui.dishes.DishItem
 import com.github.clockworkclyde.models.ui.order.OrderDish
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class SearchDishesFragment : BaseFragment(R.layout.fragment_search_dishes),
@@ -105,7 +105,7 @@ class SearchDishesFragment : BaseFragment(R.layout.fragment_search_dishes),
         findNavController().navigate(
             SearchDishesFragmentDirections.actionToDetailsFragment(
                 item.dish,
-                item.extras.toTypedArray()
+                item.selectedExtras.toTypedArray()
             )
         )
     }

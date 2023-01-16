@@ -1,12 +1,9 @@
 package com.github.clockworkclyde.basedeliverymvvm.presentation.ui.search
 
 import androidx.lifecycle.viewModelScope
-import com.github.clockworkclyde.basedeliverymvvm.data.repository.DishesRepository
 import com.github.clockworkclyde.basedeliverymvvm.domain.dishes.GetAllDishesUseCase
-import com.github.clockworkclyde.basedeliverymvvm.domain.dishes.GetDishesCategoriesUseCase
 import com.github.clockworkclyde.basedeliverymvvm.domain.search.SearchDishesUseCase
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseViewModel
-import com.github.clockworkclyde.models.local.cart.OrderDishesPref
 import com.github.clockworkclyde.models.ui.dishes.DishItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,11 +28,12 @@ class SearchDishesViewModel @Inject constructor(
     }
     
     private val dishes by lazy {
-       val list = mutableListOf<DishItem>()
-        viewModelScope.launch {
-           list.addAll(getAllDishes())
+       val list = buildList<DishItem> {
+          viewModelScope.launch {
+             addAll(getAllDishes())
+          }
        }
-        return@lazy list
+       return@lazy list
     }
 
     fun search(query: String) {

@@ -136,30 +136,33 @@ class DishesFragment : BaseFragment(R.layout.fragment_dishes), OnDishItemClickLi
     }
 
     override fun onButtonClick(item: DishItem) {
-        // TODO отправить пользователя выбрать доп в details
+        // TODO отправить пользователя выбрать обязательный доп в details (напитки)
         orderViewModel.addToOrderCart(id = item.id, extras = emptyList())
     }
 
     override fun onItemClick(item: DishItem) =
         findNavController().navigate(
-            DishesFragmentDirections.actionToDetailsFragment(item, arrayOf())
+           DishesFragmentDirections.actionToDetailsFragment(
+              dishItem = item,
+              extrasList = arrayOf()
+           )
         )
 
     override fun onEditOrderDish(item: OrderDish) {
         findNavController().navigate(
             DishesFragmentDirections.actionToDetailsFragment(
                 dishItem = item.dish,
-                extrasList = item.extras.toTypedArray()
+               extrasList = item.selectedExtras.toTypedArray()
             )
         )
     }
 
     private fun onQuantityActionClick(item: OrderDish, action: QuantityButtonAction) {
         orderViewModel.updateItemByAction(
-            id = item.dish.id,
-            action = action,
-            extras = item.extras,
-            additionalTime = item.additionTime
+           id = item.dish.id,
+           extras = item.selectedExtras,
+           action = action,
+           additionalTime = item.additionTime
         )
     }
 

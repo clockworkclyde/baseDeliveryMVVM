@@ -32,7 +32,7 @@
             app:argType="com.github.clockworkclyde.models.ui.dishes.DishItem" />
         <argument
             android:name="extrasList"
-            app:argType="com.github.clockworkclyde.models.ui.order.DishExtraEntity[]" />
+            app:argType="com.github.clockworkclyde.models.ui.dishes.extra.DishExtra[]" />
     </dialog>
     <fragment
         android:id="@+id/orderCartFragment"

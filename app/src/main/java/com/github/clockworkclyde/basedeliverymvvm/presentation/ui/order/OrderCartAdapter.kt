@@ -10,9 +10,9 @@ import com.github.clockworkclyde.basedeliverymvvm.databinding.ItemOrderCartBindi
 import com.github.clockworkclyde.basedeliverymvvm.util.BaseDiffUtilCallback
 import com.github.clockworkclyde.basedeliverymvvm.util.onSingleClick
 import com.github.clockworkclyde.models.ui.base.ListItem
-import com.github.clockworkclyde.models.ui.order.OrderDish
 import com.github.clockworkclyde.models.ui.dishes.DishItem
-import com.github.clockworkclyde.models.ui.order.DishExtraEntity
+import com.github.clockworkclyde.models.ui.dishes.extra.DishExtra
+import com.github.clockworkclyde.models.ui.order.OrderDish
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
@@ -21,8 +21,14 @@ enum class QuantityButtonAction {
 }
 
 interface OnOrderItemClickListener {
-    fun onButtonClick(id: Long, action: QuantityButtonAction, extras: List<DishExtraEntity>, additionTime: Long)
-    fun onItemClick(item: DishItem, extras: List<DishExtraEntity>, quantity: Int)
+   fun onButtonClick(
+      id: Long,
+      action: QuantityButtonAction,
+      extras: List<DishExtra>,
+      additionTime: Long
+   )
+
+   fun onItemClick(item: DishItem, extras: List<DishExtra>, quantity: Int)
 }
 
 class OrderCartAdapter(onOrderItemClickListener: OnOrderItemClickListener) :
@@ -44,9 +50,9 @@ class OrderCartAdapter(onOrderItemClickListener: OnOrderItemClickListener) :
 
                     binding.apply {
                         // bind dish's extras added to order
-                        item.extras.map {
-                            it.title + " " + it.quantity + " pcs. - " + it.price + " ₽. "
-                        }.let {
+                       item.selectedExtras.map {
+                          it.title + " " + it.quantity + " pcs. - " + it.price + " ₽. "
+                       }.let {
                             val extrasAdapter =
                                 ArrayAdapter<String>(context, R.layout.order_dish_extra, it)
                             extrasListTextView.adapter = extrasAdapter
@@ -56,7 +62,7 @@ class OrderCartAdapter(onOrderItemClickListener: OnOrderItemClickListener) :
                         titleTextView.text = dish.title
                         servingSizeTextView.text = dish.servingSize
                         priceTextView.text =
-                            "${dish.price + item.extras.sumOf { it.price * it.quantity }} ₽."
+                           "${dish.price + item.selectedExtras.sumOf { it.price * it.quantity }} ₽."
                         Glide.with(root)
                             .load(dish.image)
                             .override(
@@ -72,9 +78,9 @@ class OrderCartAdapter(onOrderItemClickListener: OnOrderItemClickListener) :
 
                         root.onSingleClick {
                             onOrderItemClickListener.onItemClick(
-                                item.dish,
-                                item.extras,
-                                item.quantity
+                               item.dish,
+                               item.selectedExtras,
+                               item.quantity
                             )
                         }
 
@@ -82,18 +88,18 @@ class OrderCartAdapter(onOrderItemClickListener: OnOrderItemClickListener) :
                         counterTextView.text = item.quantity.toString()
                         lessButton.setOnClickListener {
                             onOrderItemClickListener.onButtonClick(
-                                dish.id,
-                                QuantityButtonAction.LESS,
-                                item.extras,
-                                item.additionTime
+                               dish.id,
+                               QuantityButtonAction.LESS,
+                               item.selectedExtras,
+                               item.additionTime
                             )
                         }
                         moreButton.setOnClickListener {
                             onOrderItemClickListener.onButtonClick(
-                                dish.id,
-                                QuantityButtonAction.MORE,
-                                item.extras,
-                                item.additionTime
+                               dish.id,
+                               QuantityButtonAction.MORE,
+                               item.selectedExtras,
+                               item.additionTime
                             )
                         }
                     }

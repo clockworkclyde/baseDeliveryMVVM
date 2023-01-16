@@ -111,16 +111,13 @@
                 android:id="@+id/extrasRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/servingSizeTextView"
-                tools:listitem="@layout/item_dish_extra" />
+                tools:listitem="@layout/item_extras_category" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

@@ -8,10 +8,12 @@ import com.github.clockworkclyde.basedeliverymvvm.domain.dishes.GetDishesCategor
 import com.github.clockworkclyde.basedeliverymvvm.domain.order.GetOrderDishesEntityUseCase
 import com.github.clockworkclyde.basedeliverymvvm.domain.order.LoadOrderShoppingCartUseCase
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseViewModel
+import com.github.clockworkclyde.basedeliverymvvm.util.logg
 import com.github.clockworkclyde.models.ui.base.ViewState
 import com.github.clockworkclyde.models.ui.dishes.DishItem
 import com.github.clockworkclyde.models.ui.dishes.DishesCategoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -47,17 +49,18 @@ class DishesViewModel @Inject constructor(
                     }
                 }
             }
-            .catch { e -> emit(ViewState.Error(e)) }
+           //.catch { e -> emit(ViewState.Error(e)) }
             .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = ViewState.Empty
+               scope = CoroutineScope(viewModelScope.coroutineContext + errorHandler),
+               started = SharingStarted.WhileSubscribed(5000),
+               initialValue = ViewState.Empty
             )
     }
 
     private fun orderDishes() = getOrderDishesEntity().switchMap {
-        liveData {
-            emit(loadOrderDishes.invoke(it))
-        }
+       logg { "orderDishes: $it" }
+       liveData {
+          emit(loadOrderDishes.invoke(it))
+       }
     }
 }

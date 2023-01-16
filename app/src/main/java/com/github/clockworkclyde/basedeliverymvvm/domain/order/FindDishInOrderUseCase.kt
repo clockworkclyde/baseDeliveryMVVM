@@ -2,7 +2,7 @@ package com.github.clockworkclyde.basedeliverymvvm.domain.order
 
 import com.github.clockworkclyde.models.local.cart.OrderDishesEntity
 import com.github.clockworkclyde.models.local.cart.OrderDishesPref
-import com.github.clockworkclyde.models.ui.order.DishExtra
+import com.github.clockworkclyde.models.ui.dishes.extra.DishExtra
 import com.google.gson.Gson
 import javax.inject.Inject
 

@@ -92,7 +92,7 @@ class CheckoutViewModel @Inject constructor(
     private fun calculateTotalPrice(list: List<OrderDish>) {
         if (list.isNotEmpty()) {
             val value =
-                list.sumOf { item -> (item.dish.price + item.extras.sumOf { it.price * it.quantity }) * item.quantity }
+                list.sumOf { item -> (item.dish.price + item.selectedExtras.sumOf { it.price * it.quantity }) * item.quantity }
             setTotalPrice(value)
         } else setTotalPrice(0)
     }

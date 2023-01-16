@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupApplicationActionBar()
-        setupAllWithNavController()
+
+       setupAllWithNavController()
 
         navController.addOnDestinationChangedListener { _, _, _ -> currentFocus?.hideKeyboard() }
     }

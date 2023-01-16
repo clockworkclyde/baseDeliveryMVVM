@@ -17,7 +17,7 @@ import com.github.clockworkclyde.basedeliverymvvm.util.onSingleClick
 import com.github.clockworkclyde.basedeliverymvvm.util.setList
 import com.github.clockworkclyde.models.ui.base.ViewState
 import com.github.clockworkclyde.models.ui.dishes.DishItem
-import com.github.clockworkclyde.models.ui.order.DishExtraEntity
+import com.github.clockworkclyde.models.ui.dishes.extra.DishExtra
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -90,22 +90,22 @@ class OrderCartFragment : BaseFragment(R.layout.fragment_cart), OnOrderItemClick
     }
 
     override fun onButtonClick(
-        id: Long,
-        action: QuantityButtonAction,
-        extras: List<DishExtraEntity>,
-        additionTime: Long
+       id: Long,
+       action: QuantityButtonAction,
+       extras: List<DishExtra>,
+       additionTime: Long
     ) {
         orderViewModel.updateItemByAction(id, action, extras, additionTime)
     }
 
-    override fun onItemClick(item: DishItem, extras: List<DishExtraEntity>, quantity: Int) {
-        findNavController().navigate(
-            OrderCartFragmentDirections.actionToDetailsFragment(
-                dishItem = item,
-                extrasList = extras.toTypedArray()
-            )
-        )
-    }
+   override fun onItemClick(item: DishItem, extras: List<DishExtra>, quantity: Int) {
+      findNavController().navigate(
+         OrderCartFragmentDirections.actionToDetailsFragment(
+            dishItem = item,
+            extrasList = extras.toTypedArray()
+         )
+      )
+   }
 
     private fun navigateToSignInFragment() {
         val navController = findNavController()

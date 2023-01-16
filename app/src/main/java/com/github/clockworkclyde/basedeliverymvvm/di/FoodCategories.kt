@@ -4,4 +4,5 @@ object FoodCategories {
     const val PIZZA = "Pizza"
     const val SUSHI = "Sushi"
     const val BURGER = "Burger"
+   const val TEA = "Tea"
 }

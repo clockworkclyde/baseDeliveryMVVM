@@ -1,4 +1,4 @@
-package com.github.clockworkclyde.models.ui.order
+package com.github.clockworkclyde.models.ui.dishes.extra
 
 import android.os.Parcelable
 import com.github.clockworkclyde.models.mappers.IConvertableTo

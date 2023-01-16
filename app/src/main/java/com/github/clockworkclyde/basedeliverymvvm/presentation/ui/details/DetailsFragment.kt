@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -17,15 +17,15 @@ import com.github.clockworkclyde.basedeliverymvvm.databinding.FragmentDetailsBin
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.base.BaseDialogFragment
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.OrderCartViewModel
 import com.github.clockworkclyde.basedeliverymvvm.presentation.ui.order.QuantityButtonAction
-import com.github.clockworkclyde.basedeliverymvvm.util.clearList
 import com.github.clockworkclyde.basedeliverymvvm.util.loadDishDetailsImage
 import com.github.clockworkclyde.basedeliverymvvm.util.onSingleClick
 import com.github.clockworkclyde.basedeliverymvvm.util.setList
-import com.github.clockworkclyde.models.ui.base.ViewState
 import com.github.clockworkclyde.models.ui.dishes.DishItem
-import com.github.clockworkclyde.models.ui.order.DishExtra
+import com.github.clockworkclyde.models.ui.dishes.extra.DishExtra
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class DetailsFragment : BaseDialogFragment(), OnExtraClickListener {
@@ -37,9 +37,9 @@ class DetailsFragment : BaseDialogFragment(), OnExtraClickListener {
     private val args: DetailsFragmentArgs by navArgs()
     private val item by lazy { args.dishItem }
     private val glide by lazy { Glide.with(this) }
-    private val adapter by lazy { DishesExtrasAdapter(this) }
+    private val adapter by lazy { ExtraCategoriesAdapter(this) }
 
-    private val extrasViewModel: DishAttributesViewModel by viewModels()
+    private val extrasViewModel: DetailsViewModel by viewModels()
     private val orderViewModel: OrderCartViewModel by viewModels()
 
     override fun onStart() {
@@ -70,6 +70,7 @@ class DetailsFragment : BaseDialogFragment(), OnExtraClickListener {
                 }
             }
         }
+        setDishExtras()
     }
 
     override fun onCreateView(
@@ -86,43 +87,27 @@ class DetailsFragment : BaseDialogFragment(), OnExtraClickListener {
         applyDishLayout()
         applyQuantityButtons()
         setDishQuantity()
-        initDishExtras()
-        setDishExtras()
         setSelectedExtras()
     }
 
-    private fun initDishExtras() {
-        extrasViewModel.loadExtrasForCategory(item.categoryId)
-    }
-
     private fun setDishExtras() {
-        extrasViewModel.viewState
-            .observe(viewLifecycleOwner) { state ->
-                when (state) {
-                    is ViewState.Empty -> {
-                        binding.extrasRecyclerView.isVisible = false
-                    }
-                    is ViewState.Error -> {}
-                    is ViewState.Loading -> adapter.clearList()
-                    is ViewState.Success -> {
-                        val data = state.data
-                        adapter.setList(data)
-                        data.filter { it.isSelected }
-                            .also { setAddToOrderClick(it) }
-                            .sumOf { it.price * it.quantity }
-                            .let {
-                                updateTotalPrice(it)
-                            }
-                    }
+        extrasViewModel.extras
+            .onEach { extras ->
+                // adapter.clearList()
+                adapter.setList(extras)
+                extras.onEach { cat ->
+                    cat.extras
+                        .filter { it.isSelected }
+                        .also { setAddToOrderClick(it) }
+                        .sumOf { it.price * it.quantity }
+                        .let { updateTotalPrice(it) }
                 }
-            }
+            }.launchIn(lifecycleScope)
     }
 
     private fun setSelectedExtras() {
         val extras = args.extrasList.toList()
-        if (extras.isNotEmpty()) {
-            extrasViewModel.setSelectedExtras(extras)
-        }
+        extrasViewModel.initDishExtras(item.extras, extras)
     }
 
     private fun setDishQuantity() {

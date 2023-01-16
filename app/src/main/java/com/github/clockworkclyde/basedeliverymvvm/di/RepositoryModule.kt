@@ -1,9 +1,9 @@
 package com.github.clockworkclyde.basedeliverymvvm.di
 
 import com.github.clockworkclyde.basedeliverymvvm.data.datasource.DishesLocalDataSourceImpl
-import com.github.clockworkclyde.basedeliverymvvm.data.repository.UserAddressRepository
 import com.github.clockworkclyde.basedeliverymvvm.data.repository.AuthRepository
 import com.github.clockworkclyde.basedeliverymvvm.data.repository.DishesRepository
+import com.github.clockworkclyde.basedeliverymvvm.data.repository.UserAddressRepository
 import com.github.clockworkclyde.network.api.DeliveryRemoteDataSourceImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -14,6 +14,10 @@ import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -23,11 +27,15 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideDeliveryRepository(
+    fun provideDishesRepository(
         localDataSource: DishesLocalDataSourceImpl,
         remoteDataSource: DeliveryRemoteDataSourceImpl
     ): DishesRepository =
-        DishesRepository(localDataSource = localDataSource, remoteDataSource = remoteDataSource)
+        DishesRepository(
+            coroutineScope = CoroutineScope(CoroutineName("RepoCoroutineScope") + SupervisorJob() + Dispatchers.Default),
+            localDataSource = localDataSource,
+            remoteDataSource = remoteDataSource
+        )
 
     @Provides
     @Singleton

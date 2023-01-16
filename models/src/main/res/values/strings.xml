@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+   <string name="jalapeno_extra">Халапеньо</string>
+   <string name="drink_small">0.3</string>
+   <string name="drink_medium">0.5</string>
+   <string name="drink_large">0.7</string>
+   <string name="classic_pizza">Классическое тесто</string>
+   <string name="thin_pizza">Тонкое тесто</string>
+   <string name="cheese_extra">Сыр</string>
+</resources>

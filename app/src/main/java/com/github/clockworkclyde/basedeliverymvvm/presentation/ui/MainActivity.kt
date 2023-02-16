@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.dishesFragment,
                     R.id.orderCartFragment,
                     R.id.profileFragment
-                    )
+                )
             )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
@@ -55,8 +55,8 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp()
     }
 
-    fun getCurrentNavigationFragment(): Fragment {
-        return navHostFragment.childFragmentManager.fragments.first()
+    fun getCurrentNavigationFragment(): Fragment? {
+        return navHostFragment.childFragmentManager.fragments.firstOrNull()
     }
 
     fun getNavHostFragmentNavController(): NavController {
